@@ -1,0 +1,32 @@
+{
+  "default_session_by_college": {
+    "QUB": 2,
+    "UCC": 2,
+    "UG": 2,
+    "UL": 2,
+    "UU": 2
+  },
+  "malleable_colleges": [
+    "DCU",
+    "DU",
+    "MU",
+    "RCSI",
+    "TUD",
+    "UCD"
+  ],
+  "session_days": {},
+  "solver_time_limit_seconds": 60,
+  "college_short_names": {
+    "QUB": "Queens University Belfast",
+    "UCC": "University College Cork",
+    "UG": "University of Galway",
+    "UL": "University of Limerick",
+    "UU": "Ulster University",
+    "DCU": "Dublin City University",
+    "DU": "Dublin University",
+    "MU": "Maynooth University",
+    "RCSI": "Royal College of Surgeons in Ireland",
+    "TUD": "Technological University Dublin",
+    "UCD": "University College Dublin"
+  }
+}

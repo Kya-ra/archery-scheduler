@@ -1,0 +1,13 @@
+services:
+  archery-scheduler:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    command: >
+      streamlit run app.py
+      --server.address=0.0.0.0
+      --server.port=8501
+      --server.headless=true
+      --server.runOnSave=true
