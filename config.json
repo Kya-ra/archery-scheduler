@@ -17,16 +17,24 @@
   "session_days": {},
   "solver_time_limit_seconds": 60,
   "college_short_names": {
+    "ATU": "Atlantic Technological University",
+    "DCU": "Dublin City University",
+    "DU": "Dublin University",
+    "MU": "Maynooth University",
     "QUB": "Queens University Belfast",
+    "RCSI": "Royal College of Surgeons in Ireland",
+    "SETU": "South East Technological University",
+    "TUD": "Technological University Dublin",
+    "UCD": "University College Dublin",
     "UCC": "University College Cork",
     "UG": "University of Galway",
     "UL": "University of Limerick",
     "UU": "Ulster University",
-    "DCU": "Dublin City University",
-    "DU": "Dublin University",
-    "MU": "Maynooth University",
-    "RCSI": "Royal College of Surgeons in Ireland",
-    "TUD": "Technological University Dublin",
-    "UCD": "University College Dublin"
+    "CA": "Cuchulainn Archers",
+    "DA": "Dublin Archers",
+    "DD": "Dundrum Archers",
+    "HH": "Harbour House Archery Club",
+    "LA": "Leixlip Archers",
+    "RCA": "Rebel County"
   }
 }

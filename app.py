@@ -131,16 +131,16 @@ def normalize_headers(df):
 
 
 def split_archer_name(value):
-    """Split a combined name into first name and surname.
+    """Split a combined name into first name and last name.
 
     When the original export contains separate name fields, use those
-    instead. For a combined name, assume the first token is the first
-    name and the remaining tokens are the surname.
+    instead. For a combined name, assume the last token is the last
+    name and the remaining tokens are the first name.
     """
     name = " ".join(str(value or "").strip().split())
     parts = name.split(maxsplit=1)
-    if len(parts) == 2:
-        return parts[0], parts[1]
+    if len(parts) >= 2:
+        return " ".join(parts[:-1]), parts[-1]
     if len(parts) == 1:
         return parts[0], ""
     return "", ""
@@ -779,6 +779,8 @@ def restore_imported_draw(raw, archers):
             "Target": target,
             "Position": position,
             "Archer": archer["_name"],
+            "First Name": archer["First Name"],
+            "Last Name": archer["Last Name"],
             "College": archer["College"],
             "Bow Type": archer["Bow Type"],
             "Target Face": face,
@@ -820,9 +822,7 @@ def target_face(row):
         return "3s"
 
     if "recurve" in bow:
-        if category == "advanced" or gender in (
-            "guest", "senior league"
-        ):
+        if category in ("advanced", "guest", "senior league") or gender in ("guest", "senior league"):
             return "3s"
         return "40"
 
@@ -1418,6 +1418,8 @@ def solve_schedule(
                 "Target": t + 1,
                 "Position": letter,
                 "Archer": row["_name"],
+                "First Name": row["First Name"],
+                "Last Name": row["Last Name"],
                 "College": row["College"],
                 "Bow Type": row["Bow Type"],
                 "Target Face": (
@@ -2058,9 +2060,10 @@ def _render_duplicate_archer_form(st, draw):
                 f"{destination}."
             )
 
-        # Find a vacant position in the destination session.
+        # Find a vacant position in the destination session, respecting face types.
         configured_targets = st.session_state.get("last_targets", [])
         configured_details = st.session_state.get("last_details", [])
+        vegas_mode = st.session_state.get("vegas_mode", False)
 
         if destination <= len(configured_targets):
             target_limit = int(configured_targets[destination - 1])
@@ -2078,30 +2081,227 @@ def _render_duplicate_archer_form(st, draw):
 
         destination_draw = current[
             current["Session"].eq(destination)
-        ]
+        ].copy()
+
+        paired_position = {
+            "A": "C",
+            "C": "A",
+            "B": "D",
+            "D": "B",
+        }
+
+        def normalise_face(value):
+            return str(value or "").strip().lower()
+
+        def valid_target_faces(rows):
+            """Check the standard A/C and B/D target-face rules."""
+            if rows.empty:
+                return True
+
+            faces = {}
+            for _, row in rows.iterrows():
+                pos = str(row["Position"]).strip().upper()
+                face = normalise_face(row["Target Face"])
+                faces[pos] = face
+
+            # A/C and B/D must each use a consistent face when both
+            # positions in a pair are occupied.
+            for left, right in (("A", "C"), ("B", "D")):
+                if (
+                    left in faces
+                    and right in faces
+                    and faces[left] != faces[right]
+                ):
+                    return False
+
+            # When both face types are present, A/C must be 3s and
+            # B/D must be 40.
+            face_types = set(faces.values())
+            has_3s = "3s" in face_types
+            has_40 = "40" in face_types
+
+            if has_3s and has_40:
+                for pos in ("A", "C"):
+                    if pos in faces and faces[pos] != "3s":
+                        return False
+                for pos in ("B", "D"):
+                    if pos in faces and faces[pos] != "40":
+                        return False
+
+            return True
+
+
+        def target_rows(draw, target_number):
+            return draw[
+                draw["Target"].eq(target_number)
+            ]
+
+
+        def position_is_occupied(draw, target_number, pos):
+            return (
+                draw["Target"].eq(target_number)
+                & draw["Position"].astype(str).str.strip().str.upper().eq(pos)
+            ).any()
+
+
+        def compatible_vacancy(draw, target_number, pos, required_face):
+            """Check a vacant position against its paired position."""
+            if position_is_occupied(draw, target_number, pos):
+                return False
+
+            pair = paired_position[pos]
+            partner_rows = target_rows(draw, target_number)
+            partner_rows = partner_rows[
+                partner_rows["Position"]
+                .astype(str).str.strip().str.upper().eq(pair)
+            ]
+
+            if not partner_rows.empty:
+                partner_faces = {
+                    normalise_face(face)
+                    for face in partner_rows["Target Face"]
+                }
+                if partner_faces != {required_face}:
+                    return False
+
+            return valid_target_faces(target_rows(draw, target_number))
+
+
+        # Determine the face required by the new guest, not necessarily
+        # the face of the original archer before changing their category.
+        prospective_archer = source.copy()
+        prospective_archer["Category"] = "guest"
+        required_face = normalise_face(target_face(prospective_archer))
+
+        if vegas_mode and required_face == "3s":
+            required_face = "vegas"
 
         occupied = {
-            (int(row["Target"]), str(row["Position"]).upper())
+            (
+                int(row["Target"]),
+                str(row["Position"]).strip().upper(),
+            )
             for _, row in destination_draw.iterrows()
         }
 
         chosen = None
 
-        for target in range(1, target_limit + 1):
-            for position in positions:
-                if (target, position) not in occupied:
-                    chosen = (target, position)
+        # First pass: find a directly compatible vacancy.
+        for target_number in range(1, target_limit + 1):
+            for pos in positions:
+                if vegas_mode:
+                    if (target_number, pos) not in occupied:
+                        chosen = (target_number, pos)
+                        break
+                elif compatible_vacancy(
+                    destination_draw, target_number, pos, required_face
+                ):
+                    chosen = (target_number, pos)
                     break
+
             if chosen is not None:
                 break
 
+        # Second pass: if necessary, move one archer to free a compatible
+        # pair. Never change the moved archer's Target Face.
+        if chosen is None and not vegas_mode:
+            for target_number in range(1, target_limit + 1):
+                for pos in positions:
+                    if position_is_occupied(destination_draw, target_number, pos):
+                        continue
+
+                    pair = paired_position[pos]
+                    partner_rows = target_rows(destination_draw, target_number)
+                    partner_rows = partner_rows[
+                        partner_rows["Position"]
+                        .astype(str).str.strip().str.upper().eq(pair)
+                    ]
+
+                    # Direct placement already handles empty or compatible
+                    # partners, so only consider an incompatible occupied pair.
+                    if partner_rows.empty:
+                        continue
+
+                    if all(
+                        normalise_face(face) == required_face
+                        for face in partner_rows["Target Face"]
+                    ):
+                        continue
+
+                    # Try moving the paired archer to another vacant position.
+                    for move_index, archer in partner_rows.iterrows():
+                        original_face = archer["Target Face"]
+
+                        for new_target in range(1, target_limit + 1):
+                            if new_target == target_number:
+                                continue
+
+                            for new_pos in positions:
+                                if position_is_occupied(
+                                    destination_draw, new_target, new_pos
+                                ):
+                                    continue
+
+                                # Work on a temporary draw so failed moves
+                                # never modify the real allocation.
+                                trial = destination_draw.copy()
+
+                                trial.loc[move_index, "Target"] = new_target
+                                trial.loc[move_index, "Position"] = new_pos
+
+                                # Explicitly preserve the archer's original face.
+                                trial.loc[move_index, "Target Face"] = original_face
+
+                                old_target_rows = target_rows(
+                                    trial, target_number
+                                )
+                                new_target_rows = target_rows(trial, new_target)
+
+                                if not valid_target_faces(old_target_rows):
+                                    continue
+                                if not valid_target_faces(new_target_rows):
+                                    continue
+
+                                # Ensure the original vacancy is now compatible.
+                                if not compatible_vacancy(
+                                    trial, target_number, pos, required_face
+                                ):
+                                    continue
+
+                                # Commit the move only after all checks pass.
+                                current.loc[move_index, "Target"] = new_target
+                                current.loc[move_index, "Position"] = new_pos
+                                current.loc[move_index, "Target Face"] = original_face
+
+                                destination_draw = current[
+                                    current["Session"].eq(destination)
+                                ].copy()
+
+                                chosen = (target_number, pos)
+                                break
+
+                            if chosen is not None:
+                                break
+
+                        if chosen is not None:
+                            break
+
+                    if chosen is not None:
+                        break
+
+                if chosen is not None:
+                    break
+
         if chosen is None:
             raise ValueError(
-                f"Session {destination} has no vacant target positions. "
-                "Increase its capacity before duplicating this archer."
+                f"Session {destination} has no vacant position compatible "
+                f"with face type {required_face!r}. "
+                "No valid single-archer rearrangement was found. "
+                "Increase capacity or adjust the draw."
             )
 
         target, position = chosen
+
 
         # Generate an independent membership ID for the duplicate.
         # The original archer's ID and allocation remain unchanged.
@@ -2146,18 +2346,29 @@ def _render_duplicate_archer_form(st, draw):
         # Duplicate the allocation, modifying only the new copy.
         duplicate = source.copy()
         duplicate["Session"] = int(destination)
+        duplicate["Session Preference"] = int(destination)
         duplicate["Target"] = int(target)
         duplicate["Position"] = position
         duplicate["Membership Number"] = duplicate_member
+        duplicate["Target Face"] = target_face(duplicate)
 
         if "Category" in duplicate.index:
             duplicate["Category"] = "guest"
 
         if "Category Code" in duplicate.index:
-            duplicate["Category Code"] = "G"
+            bow_type = str(source.get("Bow Type", "") or "").strip()
+            duplicate["Category Code"] = f"{bow_type[0].upper()}G" if bow_type else "G"
 
         if "Head-to-Head Eligible" in duplicate.index:
             duplicate["Head-to-Head Eligible"] = False
+
+        #Lock source in place to prevent a move which places it in the same place as duplicate
+        source_member = str(source["Membership Number"])
+
+        current.loc[
+            current["Membership Number"].astype(str).eq(source_member),
+            "Session Preference",
+        ] = str(int(source["Session"]))
 
         # Ensure every H2H category is zero for the duplicate, if the
         # draw stores explicit category-specific scoring columns.
@@ -2213,7 +2424,36 @@ def _render_duplicate_archer_form(st, draw):
     except Exception as exc:
         st.error(f"Could not duplicate archer: {exc}")
 
+def valid_target_faces(rows, vegas_mode=False):
+    """Validate face assignments on a single target."""
+    if vegas_mode:
+        return True
 
+    positions = {
+        str(row["Position"]).strip().upper(): str(
+            row["Target Face"]
+        ).strip().lower()
+        for _, row in rows.iterrows()
+    }
+
+    # Each paired position must share its face type.
+    for left, right in (("A", "C"), ("B", "D")):
+        if left in positions and right in positions:
+            if positions[left] != positions[right]:
+                return False
+
+    # If both standard face types are present, they must occupy
+    # the correct position pairs.
+    faces = set(positions.values())
+    if "3s" in faces and "40" in faces:
+        for pos in ("A", "C"):
+            if pos in positions and positions[pos] != "3s":
+                return False
+        for pos in ("B", "D"):
+            if pos in positions and positions[pos] != "40":
+                return False
+
+    return True
 
 def swap_target_block_numbers(draw, swap_spec):
     """Swap target numbers globally or within a specified session.
@@ -2353,12 +2593,22 @@ def render_archer_class_counts(st, archers, title="Archers per class"):
     if not populated:
         return
 
+    display_df = pd.DataFrame(compact_rows)
+
+    # Keep class labels as strings and counts as nullable integers.
+    for column in display_df.columns:
+        if column.startswith("Class "):
+            display_df[column] = display_df[column].fillna("")
+        elif column.startswith("Archers "):
+            display_df[column] = display_df[column].astype("Int64")
+
     st.subheader(title)
     st.dataframe(
-        pd.DataFrame(compact_rows).fillna(""),
+        display_df,
         hide_index=True,
-        width='stretch',
+        width="stretch",
     )
+
 
 st.set_page_config(layout="wide")
 
@@ -2784,6 +3034,7 @@ if "draw" in st.session_state:
 
     render_duplicate_archer_ui(st, draw)
 
+    
     with st.expander("Delete an archer or allocation"):
         delete_mode = st.radio(
             "What would you like to delete?",
@@ -2809,98 +3060,161 @@ if "draw" in st.session_state:
                 for _, row in draw.iterrows()
             }
 
-            selected_allocation = st.selectbox(
-                "Allocation to delete",
-                options=list(allocation_options),
-                format_func=lambda value: allocation_options[value],
-                key="delete_allocation_selection",
-            )
-
-            if st.button(
-                "Delete allocation",
-                key="confirm_delete_allocation",
-                type="primary",
-            ):
-                member, session, target, position = selected_allocation
-
-                current_draw = st.session_state["draw"].copy()
-
-                mask = (
-                    current_draw["Membership Number"].astype(str).eq(member)
-                    & current_draw["Session"].eq(session)
-                    & current_draw["Target"].eq(target)
-                    & current_draw["Position"].astype(str).eq(position)
+            if not allocation_options:
+                st.info("There are no allocations to delete.")
+            else:
+                selected_allocation = st.selectbox(
+                    "Allocation to delete",
+                    options=list(allocation_options),
+                    format_func=lambda value: allocation_options[value],
+                    key="delete_allocation_selection",
                 )
 
-                if int(mask.sum()) != 1:
-                    st.error(
-                        "The allocation could not be uniquely identified. "
-                        "Nothing was deleted."
+                if st.button(
+                    "Delete allocation",
+                    key="confirm_delete_allocation",
+                    type="primary",
+                ):
+                    member, session, target, position = selected_allocation
+
+                    current_draw = st.session_state["draw"].copy()
+
+                    mask = (
+                        current_draw["Membership Number"].astype(str).eq(member)
+                        & current_draw["Session"].eq(session)
+                        & current_draw["Target"].eq(target)
+                        & current_draw["Position"].astype(str).eq(position)
                     )
-                else:
-                    st.session_state["draw"] = (
-                        current_draw.loc[~mask]
-                        .reset_index(drop=True)
-                    )
-                    st.session_state["summary"] = refresh_summary(
-                        st.session_state["draw"]
-                    )
-                    st.session_state["draw_notice"] = (
-                        f"Deleted allocation {session}.{target}{position} "
-                        f"for membership number {member}. "
-                        "Other allocations and roster details were retained."
-                    )
-                    st.session_state["draw_notice_is_warning"] = False
-                    st.rerun()
+
+                    if int(mask.sum()) != 1:
+                        st.error(
+                            "The allocation could not be uniquely identified. "
+                            "Nothing was deleted."
+                        )
+                    else:
+                        # Remove only the selected allocation initially.
+                        updated_draw = (
+                            current_draw.loc[~mask]
+                            .reset_index(drop=True)
+                        )
+
+                        # If the archer has no allocations left, remove them
+                        # from the roster as well.
+                        remaining_allocations = updated_draw[
+                            updated_draw["Membership Number"]
+                            .astype(str).eq(member)
+                        ]
+
+                        archer_removed = remaining_allocations.empty
+
+                        st.session_state["draw"] = updated_draw
+
+                        if archer_removed:
+                            archers = st.session_state["archers"].copy()
+
+                            st.session_state["archers"] = (
+                                archers[
+                                    archers["Membership Number"]
+                                    .astype(str).ne(member)
+                                ].reset_index(drop=True)
+                            )
+
+                            st.session_state["hth"] = (
+                                head_to_heads(
+                                    normalize_headers(
+                                        st.session_state["archers"]
+                                    )
+                                )
+                                if not st.session_state["archers"].empty
+                                else pd.DataFrame()
+                            )
+
+                        st.session_state["summary"] = refresh_summary(
+                            st.session_state["draw"]
+                        )
+
+                        if archer_removed:
+                            notice = (
+                                f"Deleted allocation {session}.{target}{position} "
+                                f"for membership number {member}. The archer had "
+                                "no remaining allocations and was removed from "
+                                "the roster."
+                            )
+                        else:
+                            notice = (
+                                f"Deleted allocation {session}.{target}{position} "
+                                f"for membership number {member}. Other allocations "
+                                "and the roster entry were retained."
+                            )
+
+                        st.session_state["draw_notice"] = notice
+                        st.session_state["draw_notice_is_warning"] = False
+                        st.rerun()
 
         else:
-            delete_member = st.selectbox(
-                "Archer to delete from all sessions",
-                members,
-                format_func=lambda value: labels.get(value, value),
-                key="delete_member_entirely",
+            members_with_allocations = set(
+                draw["Membership Number"].astype(str)
             )
 
-            if st.button(
-                "Delete archer entirely",
-                key="confirm_delete_entirely",
-                type="primary",
-            ):
-                current_draw = st.session_state["draw"].copy()
+            if not members_with_allocations:
+                st.info("There are no allocated archers to delete.")
+            else:
+                available_members = [
+                    member
+                    for member in members
+                    if str(member) in members_with_allocations
+                ]
 
-                st.session_state["draw"] = (
-                    current_draw[
-                        current_draw["Membership Number"].astype(str)
-                        != delete_member
-                    ].reset_index(drop=True)
-                )
-
-                st.session_state["archers"] = (
-                    st.session_state["archers"][
-                        st.session_state["archers"]["Membership Number"].astype(str)
-                        != delete_member
-                    ].reset_index(drop=True)
-                )
-
-                st.session_state["hth"] = (
-                    head_to_heads(
-                        normalize_headers(st.session_state["archers"])
+                if not available_members:
+                    st.info("There are no rostered archers with allocations.")
+                else:
+                    delete_member = st.selectbox(
+                        "Archer to delete from all sessions",
+                        available_members,
+                        format_func=lambda value: labels.get(value, value),
+                        key="delete_member_entirely",
                     )
-                    if not st.session_state["archers"].empty
-                    else pd.DataFrame()
-                )
 
-                st.session_state["summary"] = refresh_summary(
-                    st.session_state["draw"]
-                )
+                    if st.button(
+                        "Delete archer and all allocations",
+                        key="confirm_delete_entirely",
+                        type="primary",
+                    ):
+                        current_draw = st.session_state["draw"].copy()
+                        current_archers = st.session_state["archers"].copy()
 
-                st.session_state["draw_notice"] = (
-                    f"Removed membership number {delete_member} "
-                    "from the roster and all session allocations."
-                )
-                st.session_state["draw_notice_is_warning"] = False
-                st.rerun()
+                        st.session_state["draw"] = (
+                            current_draw[
+                                current_draw["Membership Number"]
+                                .astype(str).ne(str(delete_member))
+                            ].reset_index(drop=True)
+                        )
 
+                        st.session_state["archers"] = (
+                            current_archers[
+                                current_archers["Membership Number"]
+                                .astype(str).ne(str(delete_member))
+                            ].reset_index(drop=True)
+                        )
+
+                        st.session_state["hth"] = (
+                            head_to_heads(
+                                normalize_headers(st.session_state["archers"])
+                            )
+                            if not st.session_state["archers"].empty
+                            else pd.DataFrame()
+                        )
+
+                        st.session_state["summary"] = refresh_summary(
+                            st.session_state["draw"]
+                        )
+
+                        st.session_state["draw_notice"] = (
+                            f"Removed membership number {delete_member} "
+                            "from the roster and all session allocations."
+                        )
+                        st.session_state["draw_notice_is_warning"] = False
+                        st.rerun()
 
     with st.expander("Batch session changes"):
         st.caption(
