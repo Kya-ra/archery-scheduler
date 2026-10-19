@@ -768,8 +768,8 @@ def restore_imported_draw(raw, archers):
         # Preserve a recognised face from the import; otherwise use the
         # face derived by the app's existing roster normalisation.
         imported_face = cell(source, face_col).lower()
-        if imported_face in {"3s", "40"}:
-            face = imported_face
+        if imported_face in {"3s", "40", "vegas"}:
+            face = "Vegas" if imported_face == "vegas" else imported_face
         else:
             face = archer["_face"]
 
@@ -960,7 +960,21 @@ def eligible_for_session(row, session_number, cfg):
 
     return False
 
-def solve_schedule(df, targets, details, cfg, campanile_mode=True, forced_sessions=None, existing_draw=None, face_overrides=None,):
+def solve_schedule(
+    df,
+    targets,
+    details,
+    cfg,
+    campanile_mode=True,
+    forced_sessions=None,
+    existing_draw=None,
+    face_overrides=None,
+    clustering_mode=False,
+    vegas_mode=False,
+):
+    if clustering_mode:
+        campanile_mode = False
+
     n = len(df)
     ns = len(targets)
     forced_sessions = forced_sessions or {}
@@ -1011,24 +1025,26 @@ def solve_schedule(df, targets, details, cfg, campanile_mode=True, forced_sessio
         )
 
         for t in range(targets[s]):
-            pairs = [("A", "B")]
-
-            if details[s] == "Double":
-                pairs.append(("C", "D"))
-
-            for left, right in pairs:
-                f3 = model.NewBoolVar(f"3s_{s}_{t}_{left}")
-                f40 = model.NewBoolVar(f"40_{s}_{t}_{left}")
+            face_keys = ["A"] if details[s] == "Single" else ["A", "B"]
+            for face_key in face_keys:
+                f3 = model.NewBoolVar(f"3s_{s}_{t}_{face_key}")
+                f40 = model.NewBoolVar(f"40_{s}_{t}_{face_key}")
                 model.Add(f3 + f40 <= 1)
-                face_vars[(s, t, left)] = (f3, f40)
-            if details[s] == "Double":
-                # If the B/D face is 3s, A/C must also be 3s. Thus when a
-                # target mixes 3s and 40 faces, 3s occupy A/C and 40 occupy B/D.
-                model.Add(face_vars[(s, t, "C")][0] <= face_vars[(s, t, "A")][0])
+                face_vars[(s, t, face_key)] = (f3, f40)
+            if details[s] == "Double" and not vegas_mode:
+                # A/C and B/D are the physical face pairs. If B/D is 3s,
+                # A/C must also be 3s, so the mixed arrangement is consistent.
+                model.Add(
+                    face_vars[(s, t, "B")][0]
+                    <= face_vars[(s, t, "A")][0]
+                )
 
             for letter in letters:
                 slot_vars[(s, t, letter)] = []
-                face_key = "A" if letter in ("A", "B") else "C"
+                if details[s] == "Single":
+                    face_key = "A"
+                else:
+                    face_key = "A" if letter in ("A", "C") else "B"
                 f3, f40 = face_vars[(s, t, face_key)]
 
                 for a, row in df.iterrows():
@@ -1054,8 +1070,13 @@ def solve_schedule(df, targets, details, cfg, campanile_mode=True, forced_sessio
 
                     # Explicit face overrides take priority over the roster-derived face.
                     face_type = face_overrides.get(a, row["_face"])
+                    is_vegas = vegas_mode and str(face_type).lower() in {
+                        "3s", "vegas",
+                    }
 
-                    if face_type == "3s":
+                    if is_vegas:
+                        pass
+                    elif face_type == "3s":
                         model.Add(var <= f3)
                     elif face_type == "40":
                         model.Add(var <= f40)
@@ -1073,6 +1094,80 @@ def solve_schedule(df, targets, details, cfg, campanile_mode=True, forced_sessio
     for variables in slot_vars.values():
         model.Add(sum(variables) <= 1)
 
+    clustering_score = []
+    cluster_order_score = []
+    if clustering_mode:
+        cluster_order = ["C", "BB", "BI", "BA", "RB", "RI", "RA"]
+
+        def cluster_class(code):
+            normalized = str(code).strip().upper()
+            if not normalized:
+                return "Other"
+            if normalized.startswith("C"):
+                return "C"
+            return normalized[:2]
+
+        class_buckets = {cluster_class(code) for code in df["_code"]}
+        class_buckets = sorted(
+            class_buckets,
+            key=lambda bucket: (
+                cluster_order.index(bucket)
+                if bucket in cluster_order
+                else len(cluster_order),
+                bucket,
+            ),
+        )
+        bucket_rank = {
+            bucket: rank for rank, bucket in enumerate(class_buckets)
+        }
+
+        for s in range(ns):
+            letters = (
+                ["A", "B"] if details[s] == "Single"
+                else ["A", "B", "C", "D"]
+            )
+
+            for t in range(targets[s]):
+                for a, row in df.iterrows():
+                    rank = bucket_rank[cluster_class(row["_code"])]
+                    cluster_order_score.extend(
+                        100
+                        * (len(class_buckets) - rank)
+                        * (targets[s] - t)
+                        * x[(a, s, t, letter)]
+                        for letter in letters
+                    )
+
+                for class_bucket in class_buckets:
+                    members = [
+                        x[(a, s, t, letter)]
+                        for a, row in df.iterrows()
+                        if cluster_class(row["_code"]) == class_bucket
+                        for letter in letters
+                    ]
+                    class_count = model.NewIntVar(
+                        0, len(letters),
+                        f"class_count_{s}_{t}_{class_bucket}"
+                    )
+                    model.Add(class_count == sum(members))
+
+                    # Reward each same-class pair: counts 2, 3 and 4 score
+                    # 1, 3 and 6 respectively, without pairwise slot vars.
+                    for threshold, weight in ((2, 1), (3, 2), (4, 3)):
+                        if threshold > len(letters):
+                            continue
+                        reaches_threshold = model.NewBoolVar(
+                            f"class_{s}_{t}_{class_bucket}_at_least_{threshold}"
+                        )
+                        model.Add(class_count >= threshold * reaches_threshold)
+                        model.Add(
+                            class_count
+                            <= threshold - 1
+                            + (len(letters) - threshold + 1)
+                            * reaches_threshold
+                        )
+                        clustering_score.append(weight * reaches_threshold)
+
     # Target composition constraints: every used target must contain at
     # least two distinct clubs. Penalise (rather than prohibit) three or more
     # archers from one club, so the solver can still find a valid draw.
@@ -1083,6 +1178,17 @@ def solve_schedule(df, targets, details, cfg, campanile_mode=True, forced_sessio
         clubs = sorted(set(df["College"].astype(str).str.upper()))
         for t in range(targets[s]):
             target_vars = [x[(a, s, t, letter)] for a in range(n) for letter in letters]
+
+            if vegas_mode:
+                vegas_archers = [
+                    x[(a, s, t, letter)]
+                    for a, row in df.iterrows()
+                    if str(face_overrides.get(a, row["_face"])).lower()
+                    in {"3s", "vegas"}
+                    for letter in letters
+                ]
+                model.Add(sum(vegas_archers) <= 3)
+
             club_presence = {}
             for club_index, club in enumerate(clubs):
                 present = model.NewBoolVar(f"club_{s}_{t}_{club_index}")
@@ -1259,6 +1365,8 @@ def solve_schedule(df, targets, details, cfg, campanile_mode=True, forced_sessio
         1000 * sum(preservation_score)
         + sum(preference_score)
         - 10_000_000 * sum(club_penalties)
+        + 1000 * sum(clustering_score)
+        + sum(cluster_order_score)
     )
 
     solver = cp_model.CpSolver()
@@ -1288,7 +1396,13 @@ def solve_schedule(df, targets, details, cfg, campanile_mode=True, forced_sessio
                 "Archer": row["_name"],
                 "College": row["College"],
                 "Bow Type": row["Bow Type"],
-                "Target Face": row["_face"],
+                "Target Face": (
+                    "Vegas"
+                    if vegas_mode
+                    and str(face_overrides.get(a, row["_face"])).lower()
+                    in {"3s", "vegas"}
+                    else face_overrides.get(a, row["_face"])
+                ),
                 "Category": row["Category"],
                 "Gender": row["Gender"],
                 "Which Days": row["Which Days"],
@@ -1416,7 +1530,10 @@ def incompatible_faces(draw):
     for (session, target), group in draw.groupby(["Session", "Target"]):
         for positions in (("A", "C"), ("B", "D")):
             face_group = group[group["Position"].isin(positions)]
-            if face_group["Target Face"].nunique() > 1:
+            compatible_faces = face_group["Target Face"].replace(
+                {"Vegas": "40", "vegas": "40"}
+            )
+            if compatible_faces.nunique() > 1:
                 conflicts.add((int(session), int(target)))
     return conflicts
 
@@ -1466,6 +1583,8 @@ def target_face_swaps(
     df,
     cfg,
     campanile_mode=True,
+    clustering_mode=False,
+    vegas_mode=False,
 ):
     """Try both face-swap directions, then each independently.
 
@@ -1514,10 +1633,10 @@ def target_face_swaps(
     for idx in requested:
         face = str(original_draw.at[idx, "Target Face"]).strip()
 
-        if face == "40":
-            changes["40_to_3s"].append(idx)
-        elif face == "3s":
+        if face.lower() in {"3s", "vegas"}:
             changes["3s_to_40"].append(idx)
+        elif face == "40":
+            changes["40_to_3s"].append(idx)
         else:
             raise ValueError(
                 f"Unexpected target face type {face!r}."
@@ -1584,6 +1703,8 @@ def target_face_swaps(
                 campanile_mode=campanile_mode,
                 existing_draw=trial_draw,
                 face_overrides=face_overrides,
+                clustering_mode=clustering_mode,
+                vegas_mode=vegas_mode,
             )
 
             # The first feasible full schedule wins.
@@ -2165,7 +2286,7 @@ def render_archer_class_counts(st, archers, title="Archers per class"):
     if archers is None or archers.empty:
         return
 
-    required = {"Bow Type", "Category"}
+    required = {"Bow Type", "Category", "Gender"}
     missing = required - set(archers.columns)
 
     if missing:
@@ -2186,33 +2307,7 @@ def render_archer_class_counts(st, archers, title="Archers per class"):
             .str.upper()
         )
     else:
-        # Map the descriptive category to the appropriate class suffix.
-        category_suffix = {
-            "beginner": "B",
-            "intermediate": "I",
-            "advanced": "A",
-            "senior": "S",
-            "guest": "G",
-            "open": "O",
-            "female": "F",
-        }
-
-        def make_code(row):
-            bow = str(row["Bow Type"]).strip().upper()
-            category = str(row["Category"]).strip().lower()
-
-            # Support bow types stored as either descriptive names or codes.
-            bow_prefix = {
-                "barebow": "B",
-                "bare bow": "B",
-                "recurve": "R",
-                "compound": "C",
-            }.get(bow, bow)
-
-            suffix = category_suffix.get(category, "")
-            return bow_prefix + suffix if suffix else ""
-
-        codes = archers.apply(make_code, axis=1)
+        codes = archers.apply(category_code, axis=1)
 
     counts = codes.value_counts()
     populated = [
@@ -2221,15 +2316,27 @@ def render_archer_class_counts(st, archers, title="Archers per class"):
         if counts.get(code, 0) > 0
     ]
 
+    compact_rows = []
+    for offset in range(0, len(populated), 4):
+        compact_row = {}
+        for pair_number, item in enumerate(
+            populated[offset:offset + 4], start=1
+        ):
+            compact_row[f"Class {pair_number}"] = item["Class"]
+            compact_row[f"Archers {pair_number}"] = item["Archers"]
+        compact_rows.append(compact_row)
+
     if not populated:
         return
 
     st.subheader(title)
     st.dataframe(
-        pd.DataFrame(populated),
+        pd.DataFrame(compact_rows).fillna(""),
         hide_index=True,
         width='stretch',
     )
+
+st.set_page_config(layout="wide")
 
 cfg = load_config();
 
@@ -2447,15 +2554,44 @@ if not df.empty:
     if sum(capacities) < len(df):
         st.warning("There are not enough places for every archer.")
 
-    campanile_mode = st.toggle(
-        "Campanile mode", value=True,
-        help="When enabled, no target may consist entirely of beginner-category archers.",
-        key="campanile_mode",
+    target_mode = st.radio(
+        "Target grouping mode",
+        ["Campanile", "Cluster by class", "Standard"],
+        index=0,
+        horizontal=True,
+        key="target_grouping_mode",
+        help=(
+            "Campanile avoids targets made entirely of beginners. "
+            "Cluster by class makes a best effort to group matching classes. "
+            "These modes are mutually exclusive."
+        ),
+    )
+    campanile_mode = target_mode == "Campanile"
+    clustering_mode = target_mode == "Cluster by class"
+    st.session_state["campanile_mode"] = campanile_mode
+    st.session_state["clustering_mode"] = clustering_mode
+
+    vegas_mode = st.toggle(
+        "Replace all 3s faces with Vegas",
+        value=False,
+        key="vegas_mode",
+        help=(
+            "Vegas faces can be assigned to any position, with up to three "
+            "Vegas archers per target."
+        ),
     )
 
     if st.button("Generate schedule", type="primary"):
         try:
-            draw, solver_status, capacities = solve_schedule(df, targets, details, cfg, campanile_mode=campanile_mode)
+            draw, solver_status, capacities = solve_schedule(
+                df,
+                targets,
+                details,
+                cfg,
+                campanile_mode=campanile_mode,
+                clustering_mode=clustering_mode,
+                vegas_mode=vegas_mode,
+            )
             hth = head_to_heads(df)
             summary = (
                 draw.groupby("Session")
@@ -2582,6 +2718,8 @@ if "draw" in st.session_state:
                         st.session_state["last_details"], cfg,
                         campanile_mode=st.session_state.get("campanile_mode", True),
                         existing_draw=st.session_state["draw"].copy(),
+                        clustering_mode=st.session_state.get("clustering_mode", False),
+                        vegas_mode=st.session_state.get("vegas_mode", False),
                     )
                     st.session_state["archers"] = roster[REQUIRED].reset_index(drop=True)
                     st.session_state["draw"] = new_draw
@@ -2821,6 +2959,8 @@ if "draw" in st.session_state:
                     ),
                     forced_sessions=changes,
                     existing_draw=st.session_state["draw"].copy(),
+                    clustering_mode=st.session_state.get("clustering_mode", False),
+                    vegas_mode=st.session_state.get("vegas_mode", False),
                 )
                 st.session_state["archers"] = roster[REQUIRED].reset_index(drop=True)
                 st.session_state["draw"] = new_draw
@@ -2865,6 +3005,8 @@ if "draw" in st.session_state:
                             st.session_state["last_details"], cfg,
                             campanile_mode=st.session_state.get("campanile_mode", True),
                             existing_draw=st.session_state["draw"].copy(),
+                            clustering_mode=st.session_state.get("clustering_mode", False),
+                            vegas_mode=st.session_state.get("vegas_mode", False),
                         )
                         st.session_state["archers"] = roster
                         st.session_state["draw"] = new_draw
@@ -3036,6 +3178,10 @@ if "draw" in st.session_state:
                     campanile_mode=st.session_state.get(
                         "campanile_mode", True
                     ),
+                    clustering_mode=st.session_state.get(
+                        "clustering_mode", False
+                    ),
+                    vegas_mode=st.session_state.get("vegas_mode", False),
                 )
 
                 st.session_state["draw"] = new_draw
@@ -3153,6 +3299,8 @@ if "draw" in st.session_state:
                     cfg,
                     campanile_mode=st.session_state.get("campanile_mode", True),
                     existing_draw=st.session_state["draw"].copy(),
+                    clustering_mode=st.session_state.get("clustering_mode", False),
+                    vegas_mode=st.session_state.get("vegas_mode", False),
                 )
 
                 st.session_state["archers"] = roster[REQUIRED].reset_index(drop=True)
