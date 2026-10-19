@@ -6,6 +6,7 @@ import traceback
 
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 from ortools.sat.python import cp_model
 
 CONFIG_PATH = Path(__file__).resolve().with_name("config.json")
@@ -1095,7 +1096,9 @@ def solve_schedule(
         model.Add(sum(variables) <= 1)
 
     clustering_score = []
+    clustering_score_bound = 0
     cluster_order_score = []
+    cluster_order_score_bound = 0
     if clustering_mode:
         cluster_order = ["C", "BB", "BI", "BA", "RB", "RI", "RA"]
 
@@ -1130,13 +1133,16 @@ def solve_schedule(
             for t in range(targets[s]):
                 for a, row in df.iterrows():
                     rank = bucket_rank[cluster_class(row["_code"])]
-                    cluster_order_score.extend(
+                    order_weight = (
                         100
                         * (len(class_buckets) - rank)
                         * (targets[s] - t)
-                        * x[(a, s, t, letter)]
+                    )
+                    cluster_order_score.extend(
+                        order_weight * x[(a, s, t, letter)]
                         for letter in letters
                     )
+                    cluster_order_score_bound += order_weight * len(letters)
 
                 for class_bucket in class_buckets:
                     members = [
@@ -1167,6 +1173,7 @@ def solve_schedule(
                             * reaches_threshold
                         )
                         clustering_score.append(weight * reaches_threshold)
+                        clustering_score_bound += weight
 
     # Target composition constraints: every used target must contain at
     # least two distinct clubs. Penalise (rather than prohibit) three or more
@@ -1249,6 +1256,7 @@ def solve_schedule(
     # Explicit session preferences are hard constraints.
     # College defaults remain soft preferences below them.
     preference_score = []
+    preference_score_bound = 0
 
     for a, row in df.iterrows():
         prefs = parse_session_preferences(row["Session Preference"])
@@ -1282,6 +1290,11 @@ def solve_schedule(
                     10_000 * x[(a, s, t, letter)]
                     for t in range(targets[s])
                     for letter in letters_by_session[s]
+                )
+                preference_score_bound += (
+                    10_000
+                    * targets[s]
+                    * len(letters_by_session[s])
                 )
 
     
@@ -1361,8 +1374,19 @@ def solve_schedule(
     # Hard session preferences are already enforced above.
     # Face compatibility is also enforced by the model constraints.
     # Therefore preservation can only choose among otherwise valid draws.
+    preservation_weight = 1000
+    if preservation_score:
+        # One additional preserved slot outweighs every possible soft score.
+        secondary_score_bound = (
+            10_000_000 * len(club_penalties)
+            + preference_score_bound
+            + 1000 * clustering_score_bound
+            + cluster_order_score_bound
+        )
+        preservation_weight = secondary_score_bound + 1
+
     model.Maximize(
-        1000 * sum(preservation_score)
+        preservation_weight * sum(preservation_score)
         + sum(preference_score)
         - 10_000_000 * sum(club_penalties)
         + 1000 * sum(clustering_score)
@@ -2468,19 +2492,33 @@ if uploaded is not None:
                     merged[REQUIRED].reset_index(drop=True)
                 )
 
-                # A roster import does not claim to preserve allocations.
-                for key in (
-                    "draw", "hth", "summary",
-                    "last_targets", "last_details",
-                ):
-                    st.session_state.pop(key, None)
+                existing_draw = st.session_state.get("draw")
+                keep_existing_draw = (
+                    existing_draw is not None and not existing_draw.empty
+                )
+                if keep_existing_draw:
+                    normalized = normalize_headers(
+                        st.session_state["archers"]
+                    )
+                    st.session_state["hth"] = head_to_heads(normalized)
+                else:
+                    for key in (
+                        "draw", "hth", "summary",
+                        "last_targets", "last_details",
+                    ):
+                        st.session_state.pop(key, None)
 
                 st.session_state.pop("upload_signature", None)
 
                 st.success(
                     f"Imported {len(incoming)} rows; "
                     f"{len(merged)} archers are now in the roster. "
-                    "Configure the sessions and click Generate schedule."
+                    + (
+                        "Existing assignments will be preserved where valid "
+                        "when you generate the updated schedule."
+                        if keep_existing_draw
+                        else "Configure the sessions and click Generate schedule."
+                    )
                 )
 
             st.rerun()
@@ -2591,6 +2629,7 @@ if not df.empty:
                 campanile_mode=campanile_mode,
                 clustering_mode=clustering_mode,
                 vegas_mode=vegas_mode,
+                existing_draw=st.session_state.get("draw"),
             )
             hth = head_to_heads(df)
             summary = (
@@ -3361,10 +3400,67 @@ if "draw" in st.session_state:
             sep="\t", index=False, header=False, lineterminator="\n"
         )
         st.text_area(
-            "Copy this text into IANSEO",
+            "IANSEO text",
             value=ianseo_text,
             height=280,
-            help="Each row is one archer; columns are separated by tabs.",
+            disabled=True,
+            help="Headerless, tab-separated rows for IANSEO List Load.",
+        )
+        clipboard_text = (
+            json.dumps(ianseo_text)
+            .replace("<", "\\u003c")
+            .replace(">", "\\u003e")
+            .replace("&", "\\u0026")
+        )
+        components.html(
+            f"""
+            <button id="copy-all" type="button" aria-label="Copy all IANSEO text"
+                style="width:100%;min-height:48px;padding:12px 16px;border:1px solid #888;border-radius:6px;background:#fff;color:#222;font:600 16px sans-serif;touch-action:manipulation;">
+                Copy all
+            </button>
+            <div id="copy-status" role="status" aria-live="polite"
+                style="padding-top:4px;font:14px sans-serif;"></div>
+            <script>
+            const copyText = {clipboard_text};
+            const copyButton = document.getElementById("copy-all");
+            const copyStatus = document.getElementById("copy-status");
+
+            async function copyAllText() {{
+                try {{
+                    if (navigator.clipboard && window.isSecureContext) {{
+                        await navigator.clipboard.writeText(copyText);
+                    }} else {{
+                        throw new Error("Clipboard API unavailable");
+                    }}
+                }} catch (error) {{
+                    const temporaryInput = document.createElement("textarea");
+                    temporaryInput.value = copyText;
+                    temporaryInput.setAttribute("readonly", "");
+                    temporaryInput.style.position = "fixed";
+                    temporaryInput.style.top = "0";
+                    temporaryInput.style.left = "-9999px";
+                    document.body.appendChild(temporaryInput);
+                    temporaryInput.focus();
+                    temporaryInput.select();
+                    temporaryInput.setSelectionRange(0, copyText.length);
+                    const copied = document.execCommand("copy");
+                    temporaryInput.remove();
+                    if (!copied) throw error;
+                }}
+
+                copyButton.textContent = "Copied";
+                copyStatus.textContent = "Copied to clipboard.";
+                window.setTimeout(() => {{
+                    copyButton.textContent = "Copy all";
+                    copyStatus.textContent = "";
+                }}, 2000);
+            }}
+
+            copyButton.addEventListener("click", copyAllText);
+            </script>
+            """,
+            height=62,
+            scrolling=False,
         )
         st.download_button(
             "Download tab-separated text",
