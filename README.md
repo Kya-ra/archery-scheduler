@@ -90,7 +90,7 @@ These three choices are mutually exclusive. The target-validity requirements abo
 
 The default target face is derived from bow type, category, and gender: compound uses 3s; recurve advanced and guest/senior league use 3s; other recurve and barebow use 40.
 
-When **Replace all 3s faces with Vegas** is enabled, every archer who would use a 3s face is labeled `Vegas`. Vegas has no face-pair constraint and may occupy any position. No target may have more than three Vegas archers. It uses the same physical shape as a 40 face, so the solver may place one, two, or three Vegas faces on a target and may combine Vegas and 40 faces.
+When **Replace all 3s faces with Vegas** is enabled, every archer who would use a 3s face is labeled `Vegas`. Vegas has no face-pair constraint and may occupy any position. A Double target may have zero through four Vegas archers, including all four positions; a Single target is limited by its two available positions. Vegas uses the same physical shape as a 40 face, so targets may combine Vegas and 40 faces.
 
 Without Vegas mode, the physical face pairs on a Double target are `A/C` and `B/D`; each pair must use a compatible face. The solver enforces this as a hard constraint. Single targets have the `A/B` pair.
 

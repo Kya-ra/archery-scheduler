@@ -1194,7 +1194,7 @@ def solve_schedule(
                     in {"3s", "vegas"}
                     for letter in letters
                 ]
-                model.Add(sum(vegas_archers) <= 3)
+                model.Add(sum(vegas_archers) <= 4)
 
             club_presence = {}
             for club_index, club in enumerate(clubs):
@@ -2614,8 +2614,8 @@ if not df.empty:
         value=False,
         key="vegas_mode",
         help=(
-            "Vegas faces can be assigned to any position, with up to three "
-            "Vegas archers per target."
+            "Vegas faces can be assigned to any position. A target may have "
+            "zero to four Vegas archers, subject to its position capacity."
         ),
     )
 
