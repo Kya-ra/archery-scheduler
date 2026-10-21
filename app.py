@@ -132,9 +132,11 @@ def normalize_headers(df):
 def split_archer_name(value):
     """Split a combined name into first name and last name.
 
-    If a surname prefix (O, Ó, Ní, Ni, Níc, Nic or Mac) appears
-    as a separate token, it and all subsequent tokens form the
-    last name. Otherwise, assume the last token is the last name.
+    First, detect IANSEO format, where the last name starts at the
+    first all-uppercase token following mixed-case text.
+    Otherwise, surname prefixes (O, Ó, Ní, Ni, Níc, Nic or Mac),
+    matched case-insensitively, start the last name.
+    As a fallback, assume the final token is the last name.
     """
     name = " ".join(str(value or "").strip().split())
     parts = name.split()
@@ -142,12 +144,22 @@ def split_archer_name(value):
     if not parts:
         return "", ""
 
-    surname_prefixes = {"O", "Ó", "Ní", "Ni", "Níc", "Nic", "Mac"}
+    # IANSEO format, e.g. "Pádraig MAC LOCHLAINN"
+    for i, part in enumerate(parts):
+        if part.isupper() and any(c.isalpha() for c in part):
+            if i > 0 and any(
+                c.islower() for previous in parts[:i] for c in previous
+            ):
+                return " ".join(parts[:i]), " ".join(parts[i:])
+
+    # Irish surname prefixes, e.g. "Pádraig Mac Lochlainn"
+    surname_prefixes = {"o", "ó", "ní", "ni", "níc", "nic", "mac"}
 
     for i, part in enumerate(parts):
-        if part in surname_prefixes:
+        if part.casefold() in surname_prefixes:
             return " ".join(parts[:i]), " ".join(parts[i:])
 
+    # Default: final token is the last name
     if len(parts) >= 2:
         return " ".join(parts[:-1]), parts[-1]
 
@@ -333,38 +345,31 @@ def prepare_import_roster(raw):
 
     # Split combined archer names when separate name columns are unavailable.
     # Prefer an explicit family/given-name pair whenever both exist.
-    combined_col = find_column("Archer", "Archer Name", "Full Name")
+    combined_col = find_column("Archer", "Archer Name", "Full Name", "Name")
     family_col = find_column("Family Name", "Last Name", "Surname")
     given_col = find_column("First Name", "Given Name", "Forename")
 
-    if combined_col is not None and (
-        family_col is None or given_col is None
-    ):
-        combined = source("Archer", "Archer Name", "Full Name")
+    if combined_col is not None and family_col is None and given_col is None:
+        combined = source("Archer", "Archer Name", "Full Name", "Name")
 
         def split_name(value):
             if not value:
                 return "", ""
 
-            # Reuse the app's established name-splitting behaviour.
             first, last = split_archer_name(value)
             return str(first).strip(), str(last).strip()
 
         split_names = combined.map(split_name)
+        mapped["First Name"] = split_names.map(lambda pair: pair[0])
+        mapped["Last Name"] = split_names.map(lambda pair: pair[1])
 
-        if given_col is None:
-            mapped["First Name"] = split_names.map(lambda pair: pair[0])
-
-        if family_col is None:
-            mapped["Last Name"] = split_names.map(lambda pair: pair[1])
-
-    # IANSEO format: separate Family Name and Name fields.
-    # "Name" means given name here, not a combined full name.
+    # IANSEO format: Family Name and Name are separate fields.
+    # Only treat Name as a given name when Family Name is present.
     if find_column("Family Name") is not None:
         mapped["Last Name"] = source("Family Name")
 
-    if find_column("Name") is not None and find_column("First Name", "Given Name", "Forename") is None:
-        mapped["First Name"] = source("Name")
+        if find_column("Name") is not None and given_col is None:
+            mapped["First Name"] = source("Name")
 
     # Reconstruct bow, category, and gender from IANSEO Division/Class.
     division_col = find_column("Division")
