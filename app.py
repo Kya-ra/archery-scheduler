@@ -1474,14 +1474,6 @@ def head_to_heads(df):
             a = counts.get(code, 0)
             b = counts.get(mate, 0)
 
-            if a < 4 or b < 4:
-                groups.append((
-                    code[:-1] + " (O/F merged)",
-                    a + b,
-                ))
-                consumed.update([code, mate])
-                continue
-
         groups.append((code, counts.get(code, 0)))
         consumed.add(code)
 
@@ -1500,19 +1492,25 @@ def head_to_heads(df):
 
         # Knockout round structure, including byes.
         stage_matches = []
-        if rounds:
-            bracket_size = 2 ** rounds
+
+        if entrants > 1:
+            bracket_size = 2 ** math.ceil(math.log2(entrants))
             byes = bracket_size - entrants
             first_round = (entrants - byes) // 2
 
-            stage_matches.append(first_round)
+            if first_round:
+                stage_matches.append(str(first_round))
 
-            remaining_winners = first_round
-            for _ in range(1, rounds):
-                remaining_winners = math.ceil(
-                    remaining_winners / 2
-                )
-                stage_matches.append(remaining_winners)
+            remaining_entrants = entrants - first_round
+
+            while remaining_entrants > 2:
+                matches = remaining_entrants // 2
+                stage_matches.append(str(matches))
+                remaining_entrants -= matches
+
+            # Gold final and bronze match
+            if entrants >= 2:
+                stage_matches.append("G" if entrants < 4 else "GB")
 
         report.append({
             "Category": label,
