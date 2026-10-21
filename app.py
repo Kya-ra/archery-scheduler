@@ -129,24 +129,29 @@ def normalize_headers(df):
 
     return df
 
-
 def split_archer_name(value):
     """Split a combined name into first name and last name.
 
-    When the original export contains separate name fields, use those
-    instead. For a combined name, assume the last token is the last
-    name and the remaining tokens are the first name.
+    If a surname prefix (O, Ó, Ní, Ni, Níc, Nic or Mac) appears
+    as a separate token, it and all subsequent tokens form the
+    last name. Otherwise, assume the last token is the last name.
     """
     name = " ".join(str(value or "").strip().split())
-    parts = name.split(maxsplit=1)
+    parts = name.split()
+
+    if not parts:
+        return "", ""
+
+    surname_prefixes = {"O", "Ó", "Ní", "Ni", "Níc", "Nic", "Mac"}
+
+    for i, part in enumerate(parts):
+        if part in surname_prefixes:
+            return " ".join(parts[:i]), " ".join(parts[i:])
+
     if len(parts) >= 2:
         return " ".join(parts[:-1]), parts[-1]
-    if len(parts) == 1:
-        return parts[0], ""
-    return "", ""
 
-
-
+    return parts[0], ""
 
 def read_entry_file(uploaded):
     """Read CSV, TSV, ODS, or XLSX, including headerless IANSEO List Load files."""
