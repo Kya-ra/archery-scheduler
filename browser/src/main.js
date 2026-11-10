@@ -137,6 +137,7 @@ const state = {
   lastDetails: [],
   solverStatus: "",
   editMember: null,
+  settingsChanged: false,
   faceOverrides: {}, // membership number -> "3s" | "40"
   // Competition setup inputs.
   targetCounts: [17, 17],
@@ -248,16 +249,14 @@ function renderSessionConfigs() {
     input.addEventListener("input", () => {
       state.capacityEdited = true;
       state.targetCounts[index] = Math.max(1, Math.min(200, Number(input.value) || 1));
-      renderCapacity();
-      scheduleRegeneration();
+      settingsChanged();
     });
   });
   elements.sessionConfigs.querySelectorAll(".target-detail").forEach((select, index) => {
     select.addEventListener("change", () => {
       state.capacityEdited = true;
       state.details[index] = select.value;
-      renderCapacity();
-      scheduleRegeneration();
+      settingsChanged();
     });
   });
   renderCapacity();
@@ -283,6 +282,9 @@ function renderCapacity() {
     elements.runNote.textContent = `There are not enough places for every archer. Add ${needed - total} places before generating.`;
   } else if (tooMany || parity) {
     elements.runNote.textContent = tooMany ?? parity;
+  } else if (needed && state.draw && state.settingsChanged) {
+    elements.runNote.textContent = "Settings changed. Click Generate schedule to rebuild from the current draw, "
+      + "keeping existing allocations where valid.";
   } else if (needed) {
     elements.runNote.textContent = `${needed} archers ready · changes remain in this browser tab.`;
   } else {
@@ -400,6 +402,7 @@ function handleFile(file) {
         // Show the copied layout in the setup panel, so a later Generate or
         // settings change builds on it.
         showCapacity(capacity.targets, capacity.details);
+        state.settingsChanged = false;
         state.editMember = null;
         const roster = incoming.map(rosterRecord);
         commit({
@@ -449,7 +452,7 @@ function downloadTemplate() {
 function clearAll() {
   if (state.busy) return;
   Object.assign(state, {
-    roster: [], draw: null, hth: [], summary: [], editMember: null, capacityEdited: false, faceOverrides: {},
+    roster: [], draw: null, hth: [], summary: [], editMember: null, capacityEdited: false, faceOverrides: {}, settingsChanged: false,
   });
   elements.file.value = "";
   elements.importMode.forEach((input) => { input.checked = input.value === "roster"; });
@@ -460,7 +463,7 @@ function clearAll() {
 
 // ---- Generate ----
 
-function generate({ automatic = false } = {}) {
+function generate() {
   const archers = normalized();
   if (!archers.length) return;
   const targets = [...state.targetCounts];
@@ -469,17 +472,9 @@ function generate({ automatic = false } = {}) {
     const solved = await runSolver("solve", solvePayload(archers, targets, details));
     state.lastTargets = targets;
     state.lastDetails = details;
-    commit({
-      roster: state.roster,
-      draw: solved.draw,
-      status: solved.status,
-      notice: automatic
-        ? `Schedule regenerated for the new settings, keeping existing allocations where valid: ${solved.status}`
-        : `Schedule generated: ${solved.status}`,
-    });
-  }, automatic
-    ? `Regenerating for the new settings; this may take up to ${timeLimit} seconds.`
-    : `Solving in a background worker; this may take up to ${timeLimit} seconds.`);
+    state.settingsChanged = false;
+    commit({ roster: state.roster, draw: solved.draw, status: solved.status, notice: `Schedule generated: ${solved.status}` });
+  }, `Solving in a background worker; this may take up to ${timeLimit} seconds.`);
 }
 
 // Sets the setup panel to a session layout.
@@ -495,19 +490,11 @@ function showCapacity(targets, details) {
   renderSessionConfigs();
 }
 
-// With a draw on screen, a setup change regenerates from it once the input
-// settles. Invalid setups are only flagged.
-let regenerationTimer = 0;
-function scheduleRegeneration() {
-  window.clearTimeout(regenerationTimer);
-  if (!state.draw || !state.roster.length) return;
-  regenerationTimer = window.setTimeout(() => {
-    if (state.busy) {
-      scheduleRegeneration();
-      return;
-    }
-    if (!elements.generate.disabled) generate({ automatic: true });
-  }, 800);
+// Generate stays manual: a setup change with a draw on screen only marks
+// the draw as out of date, so several changes cost one solve.
+function settingsChanged() {
+  if (state.draw) state.settingsChanged = true;
+  renderCapacity();
 }
 
 // Re-solves an updated roster with the last generated capacity, dropping
@@ -906,13 +893,10 @@ elements.clearAll.addEventListener("click", clearAll);
 elements.sessionCount.addEventListener("change", () => {
   state.capacityEdited = true;
   renderSessionConfigs();
-  scheduleRegeneration();
+  settingsChanged();
 });
-elements.vegas.addEventListener("change", () => {
-  renderCapacity();
-  scheduleRegeneration();
-});
-elements.mode.forEach((input) => input.addEventListener("change", scheduleRegeneration));
+elements.vegas.addEventListener("change", settingsChanged);
+elements.mode.forEach((input) => input.addEventListener("change", settingsChanged));
 elements.generate.addEventListener("click", generate);
 elements.download.addEventListener("click", () => {
   if (state.draw) downloadBlob("shooting_list.csv", shootingListCsv(state.draw), "text/csv;charset=utf-8");

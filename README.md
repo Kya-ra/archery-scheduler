@@ -145,7 +145,7 @@ It has the same features as the Streamlit edition:
 
 The solver is HiGHS (a MIP solver compiled to WebAssembly) running in a Web Worker, in place of OR-Tools. It optimises the same weighted objective as `solve_schedule()` within `solver_time_limit_seconds`. A draw that fills every place while an odd number of archers shoot 3s faces is impossible (a full target holds 0, 2 or 4 such archers), so the page flags it and disables generation. A setup with more targets than the roster can fill (every target needs archers from two colleges) is flagged the same way. The browser edition also adds targets to the untouched default setup when it is too small for the roster.
 
-Once a draw is on screen, generated or copied, changing the grouping mode, Vegas faces, sessions, targets or target detail regenerates the schedule from it automatically, keeping existing allocations where they remain valid. Copying a schedule sets the session setup to the copied layout (highest target used per session, Double when C or D positions are used).
+Generate schedule always builds on the draw on screen, generated or copied, keeping existing allocations where they remain valid. Changing the setup only marks that draw as out of date, so several changes need one solve. Copying a schedule sets the session setup to the copied layout (highest target used per session, Double when C or D positions are used).
 
 Where the two editions intentionally differ:
 
