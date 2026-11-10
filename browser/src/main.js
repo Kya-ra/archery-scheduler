@@ -39,6 +39,12 @@ import {
   shootingListCsv,
   workbookBytes,
 } from "./exports.js";
+import {
+  indexedOverrides,
+  overridesFromDraw,
+  reconcileOverrides,
+  setOverride,
+} from "./overrides.js";
 import "./styles.css";
 
 const $ = (selector) => document.querySelector(selector);
@@ -131,6 +137,7 @@ const state = {
   lastDetails: [],
   solverStatus: "",
   editMember: null,
+  faceOverrides: {}, // membership number -> "3s" | "40"
   // Competition setup inputs.
   targetCounts: [17, 17],
   details: ["Double", "Double"],
@@ -258,8 +265,11 @@ function renderSessionConfigs() {
 function renderCapacity() {
   const total = capacityTotal();
   const needed = state.roster.length;
+  const effectiveFaces = normalized().map((archer) => ({
+    ...archer, _face: state.faceOverrides[archer["Membership Number"]] ?? archer._face,
+  }));
   const parity = needed
-    ? fullCapacityParityProblem(normalized(), state.targetCounts, state.details, elements.vegas.checked)
+    ? fullCapacityParityProblem(effectiveFaces, state.targetCounts, state.details, elements.vegas.checked)
     : null;
   const short = needed > 0 && total < needed;
   elements.totalCapacity.classList.toggle("capacity-short", short || Boolean(parity));
@@ -323,7 +333,7 @@ function runSolver(op, payload, solves = 1) {
 
 // Solver inputs for every regeneration. Like the Streamlit edits, they use
 // the current grouping and Vegas settings.
-const solvePayload = (archers, targets, details, extra = {}) => ({
+const solvePayload = (archers, targets, details, extra = {}, overrides = state.faceOverrides) => ({
   archers,
   targets,
   details,
@@ -331,6 +341,7 @@ const solvePayload = (archers, targets, details, extra = {}) => ({
   mode: currentMode(),
   vegasMode: elements.vegas.checked,
   existingDraw: state.draw ?? [],
+  faceOverrides: indexedOverrides(archers, overrides),
   ...extra,
 });
 
@@ -351,8 +362,9 @@ async function perform(prefix, action, busyMessage = "") {
 
 const regenerating = `Regenerating the schedule; this may take up to ${timeLimit} seconds.`;
 
-function commit({ roster, draw, status, notice, noticeKind = "success" }) {
+function commit({ roster, draw, status, notice, noticeKind = "success", faceOverrides }) {
   if (roster) {
+    state.faceOverrides = reconcileOverrides(state.roster, roster, state.faceOverrides);
     state.roster = roster;
     const archers = normalized();
     state.hth = archers.length ? headToHeads(archers) : [];
@@ -362,6 +374,7 @@ function commit({ roster, draw, status, notice, noticeKind = "success" }) {
     state.summary = refreshSummary(draw);
   }
   if (status) state.solverStatus = status;
+  if (faceOverrides) state.faceOverrides = faceOverrides;
   render();
   if (notice) setNotice(notice, noticeKind);
 }
@@ -381,9 +394,11 @@ function handleFile(file) {
         state.lastTargets = capacity.targets;
         state.lastDetails = capacity.details;
         state.editMember = null;
+        const roster = incoming.map(rosterRecord);
         commit({
-          roster: incoming.map(rosterRecord),
+          roster,
           draw,
+          faceOverrides: overridesFromDraw(draw, roster),
           status: "Imported",
           notice: `Copied ${draw.length} existing allocations. No new schedule was generated.`,
         });
@@ -426,7 +441,9 @@ function downloadTemplate() {
 
 function clearAll() {
   if (state.busy) return;
-  Object.assign(state, { roster: [], draw: null, hth: [], summary: [], editMember: null, capacityEdited: false });
+  Object.assign(state, {
+    roster: [], draw: null, hth: [], summary: [], editMember: null, capacityEdited: false, faceOverrides: {},
+  });
   elements.file.value = "";
   elements.importMode.forEach((input) => { input.checked = input.value === "roster"; });
   setImportMode("roster");
@@ -449,9 +466,10 @@ function generate() {
   }, `Solving in a background worker; this may take up to ${timeLimit} seconds.`);
 }
 
-// Re-solves an updated roster with the last generated capacity.
-const resolveWith = (roster, extra = {}) =>
-  runSolver("solve", solvePayload(normalizeRoster(roster), state.lastTargets, state.lastDetails, extra));
+// Re-solves an updated roster with the last generated capacity, dropping
+// the overrides that the roster change invalidates.
+const resolveWith = (roster, extra = {}, overrides = reconcileOverrides(state.roster, roster, state.faceOverrides)) =>
+  runSolver("solve", solvePayload(normalizeRoster(roster), state.lastTargets, state.lastDetails, extra, overrides));
 
 // ---- Rendering ----
 
@@ -467,7 +485,14 @@ function renderRoster() {
   if (!state.roster.length) return;
   const archers = normalized();
   elements.rosterSummaryTitle.textContent = `${state.roster.length} archers loaded.`;
-  const rows = archers.map((archer) => ({ ...archer, "Target Face": archer._face, "Head-to-Head Category": archer._code }));
+  const rows = archers.map((archer) => {
+    const override = state.faceOverrides[archer["Membership Number"]];
+    return {
+      ...archer,
+      "Target Face": override ? `${override} (override)` : archer._face,
+      "Head-to-Head Category": archer._code,
+    };
+  });
   elements.rosterTable.innerHTML = dataTable([...REQUIRED, "Target Face", "Head-to-Head Category"], rows);
 }
 
@@ -677,16 +702,32 @@ function saveArcherEdit(event) {
     .map((input) => [REQUIRED[Number(input.dataset.fieldIndex)], input.value]));
   perform("Could not save archer details", async () => {
     const roster = editArcher(state.roster, member, edited);
-    const solved = await resolveWith(roster);
+    // Follow a membership number change; a face-field change drops it.
+    const before = state.roster.find((archer) => String(archer["Membership Number"]) === member);
+    const after = roster[state.roster.indexOf(before)];
+    const overrides = { ...state.faceOverrides };
+    if (overrides[member] && after["Membership Number"] !== member) {
+      overrides[after["Membership Number"]] = overrides[member];
+      delete overrides[member];
+    }
+    const faceOverrides = reconcileOverrides(
+      state.roster.map((archer) => (archer === before ? { ...before, "Membership Number": after["Membership Number"] } : archer)),
+      roster,
+      overrides,
+    );
+    const solved = await resolveWith(roster, {}, faceOverrides);
     state.editMember = null;
-    commit({ roster, draw: solved.draw, status: solved.status, notice: "Archer details saved and schedule regenerated." });
+    commit({
+      roster, draw: solved.draw, status: solved.status, faceOverrides,
+      notice: "Archer details saved and schedule regenerated.",
+    });
   }, regenerating);
 }
 
 function duplicate(event) {
   event.preventDefault();
   perform("Could not duplicate archer", async () => {
-    commit(duplicateArcher({
+    const result = duplicateArcher({
       draw: state.draw,
       roster: state.roster,
       sourceIndex: Number(elements.duplicateSource.value),
@@ -694,7 +735,10 @@ function duplicate(event) {
       lastTargets: state.lastTargets,
       lastDetails: state.lastDetails,
       vegasMode: elements.vegas.checked,
-    }));
+    });
+    // The copy keeps the source's face through later regenerations.
+    const faceOverrides = setOverride(state.faceOverrides, result.roster, result.duplicate.member, result.duplicate.face);
+    commit({ ...result, faceOverrides });
   });
 }
 
@@ -751,9 +795,14 @@ function faceSwaps(event) {
       allocations,
     }, 3);
     const { failures } = solved;
+    let faceOverrides = state.faceOverrides;
+    for (const [member, face] of Object.entries(solved.applied)) {
+      faceOverrides = setOverride(faceOverrides, state.roster, member, face);
+    }
     commit({
       draw: solved.draw,
       status: solved.status,
+      faceOverrides,
       notice: failures.length
         ? `Some face swaps could not be completed: ${failures.join("; ")}`
         : "All requested target-face swaps were applied.",

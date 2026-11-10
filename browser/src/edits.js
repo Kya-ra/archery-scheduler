@@ -350,10 +350,13 @@ export function duplicateArcher({ draw, roster, sourceIndex, destination, lastTa
     return validTargetFaces(rowsAt(rows, target));
   };
 
-  // As in app.py, the copy keeps the source archer's face (a recurve
-  // beginner's copy stays on 40 although Guests normally shoot 3s). Unlike
-  // app.py, it is also placed by that face, so its pair stays consistent.
-  let requiredFace = targetFace({ ...source, _name: source.Archer }).toLowerCase();
+  // The copy keeps the source archer's face (as app.py does for faces
+  // derived from the roster), including a face set by an override, and is
+  // placed by that face so its pair stays consistent. A recurve beginner's
+  // copy therefore stays on 40 although Guests normally shoot 3s.
+  let requiredFace = clean(source["Target Face"]).toLowerCase();
+  if (!["3s", "40", "vegas"].includes(requiredFace)) requiredFace = targetFace({ ...source, _name: source.Archer });
+  if (!vegasMode && requiredFace === "vegas") requiredFace = "3s";
   if (vegasMode && requiredFace === "3s") requiredFace = "vegas";
 
   let chosen = null;
@@ -450,6 +453,7 @@ export function duplicateArcher({ draw, roster, sourceIndex, destination, lastTa
   return {
     draw: sortDraw(updatedDraw),
     roster: updatedRoster,
+    duplicate: { member: duplicateMember, face: duplicate["Target Face"] },
     notice: `Duplicated ${source.Archer ?? member} into session ${destination}, target ${chosen.target}${chosen.position}. `
       + `The new copy is a Guest with membership ID ${duplicateMember} and is excluded from head-to-head `
       + "eligibility. The original remains unchanged.",

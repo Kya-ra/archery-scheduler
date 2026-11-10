@@ -148,7 +148,8 @@ The solver is HiGHS (a MIP solver compiled to WebAssembly) running in a Web Work
 Where the two editions intentionally differ:
 
 - A headerless IANSEO List Load CSV/TSV keeps its first archer (the Streamlit edition reads that row as a header and drops it).
-- A duplicated archer keeps the source archer's face, as in the Streamlit edition, but is also placed by that face (the Streamlit edition places it by the Guest face, which can leave an incompatible face pair).
+- A duplicated archer keeps the source archer's actual face, as in the Streamlit edition, but is also placed by that face (the Streamlit edition places it by the Guest face, which can leave an incompatible face pair).
+- Face overrides persist. A face set by "Swap target face type", kept by a duplicated archer, or recorded in a copied schedule applies to every later regeneration. It is cleared when that archer's bow, category or gender changes, when the archer is removed, or when a later face swap returns them to their usual face. Overridden faces are marked in the roster table. (The Streamlit edition applies a face swap to one solve only.)
 
 SheetJS, used for XLSX/ODS files, is vendored in `browser/vendor/` from the official SheetJS distribution; the npm registry's `xlsx` package is outdated.
 

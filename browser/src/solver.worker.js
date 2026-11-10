@@ -11,7 +11,7 @@ self.onmessage = async ({ data: { op, payload } }) => {
   try {
     const highs = await highsPromise;
     const solved = op === "faceSwap" ? targetFaceSwaps(highs, payload) : solveSchedule(highs, payload);
-    self.postMessage({ draw: solved.draw, status: statusName(solved.result), failures: solved.failures ?? [] });
+    self.postMessage({ draw: solved.draw, status: statusName(solved.result), failures: solved.failures ?? [], applied: solved.applied ?? {} });
   } catch (error) {
     self.postMessage({ error: error instanceof Error ? error.message : String(error) });
   }

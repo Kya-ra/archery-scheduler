@@ -206,3 +206,64 @@ test("exported CSV and Excel schedules copy back in unchanged", async () => {
     assert.equal(restored.find((row) => row["Membership Number"] === "A00")["Session Preference"], "1", file.name);
   }
 });
+
+test("face overrides persist only while bow, category and gender are unchanged", async () => {
+  const { setOverride, reconcileOverrides, overridesFromDraw, indexedOverrides } = await import("../src/overrides.js");
+  const roster = [record("B1", { bow: "barebow", category: "intermediate" }), record("R1", { college: "UCC" })];
+  let overrides = setOverride({}, roster, "B1", "3s");
+  assert.deepEqual(overrides, { B1: "3s" });
+  assert.deepEqual(setOverride(overrides, roster, "B1", "40"), {}, "returning to the derived face clears it");
+  assert.deepEqual(setOverride({}, roster, "R1", "Vegas"), {}, "Vegas is the 3s face");
+  assert.deepEqual(indexedOverrides(normalizeRoster(roster), overrides), { 0: "3s" });
+  const renamedCollege = roster.map((archer) => ({ ...archer, College: "UL" }));
+  assert.deepEqual(reconcileOverrides(roster, renamedCollege, overrides), overrides);
+  const reclassed = roster.map((archer) => ({ ...archer, Category: "beginner" }));
+  assert.deepEqual(reconcileOverrides(roster, reclassed, overrides), {});
+  assert.deepEqual(reconcileOverrides(roster, roster.slice(1), overrides), {});
+  overrides = overridesFromDraw([{ "Membership Number": "B1", "Target Face": "3s" }, { "Membership Number": "R1", "Target Face": "3s" }], roster);
+  assert.deepEqual(overrides, { B1: "3s" });
+});
+
+test("a face swap survives regeneration until the class changes", async () => {
+  const { setOverride, indexedOverrides, reconcileOverrides } = await import("../src/overrides.js");
+  const roster = [
+    record("R1", { college: "QUB" }), record("R2", { college: "UCC" }),
+    record("B1", { bow: "barebow", category: "intermediate", college: "QUB" }),
+    record("B2", { bow: "barebow", category: "intermediate", college: "UCC" }),
+  ];
+  const archers = normalizeRoster(roster);
+  const draw = await solve(roster, { targets: [2] });
+  const b1 = draw.find((row) => row["Membership Number"] === "B1");
+  const swapped = targetFaceSwaps(await highs(), {
+    draw, allocations: [slot(b1)], archers, targets: [2], details: ["Double"],
+    config, mode: "Standard", vegasMode: false, faceOverrides: {},
+  });
+  assert.deepEqual(swapped.applied, { B1: "3s" });
+  const overrides = setOverride({}, roster, "B1", "3s");
+  // Regenerating (e.g. after another edit) keeps the swapped face.
+  const regenerated = await solve(roster, {
+    targets: [2], existingDraw: swapped.draw, faceOverrides: indexedOverrides(archers, overrides),
+  });
+  assert.equal(regenerated.find((row) => row["Membership Number"] === "B1")["Target Face"], "3s");
+  // A class swap recalculates the face.
+  const reclassed = roster.map((archer) => (archer["Membership Number"] === "B1" ? { ...archer, Category: "advanced" } : archer));
+  assert.deepEqual(reconcileOverrides(roster, reclassed, overrides), {});
+});
+
+test("a duplicate copies a face-swapped source's face", async () => {
+  const roster = [
+    record("RB", { category: "beginner", college: "QUB" }), record("RA", { college: "UCC" }),
+    record("BB", { bow: "barebow", category: "intermediate", college: "QUB" }),
+    record("BC", { bow: "barebow", category: "intermediate", college: "UCC" }),
+  ];
+  const draw = [
+    { ...normalizeRoster([roster[0]])[0], Session: 1, Target: 1, Position: "A", Archer: "RB Archer", "Membership Number": "RB", "Target Face": "3s" },
+    { Session: 2, Target: 1, Position: "A", Archer: "RA Archer", "Membership Number": "RA", "Target Face": "3s" },
+    { Session: 2, Target: 1, Position: "B", Archer: "BB Archer", "Membership Number": "BB", "Target Face": "40" },
+  ];
+  const result = duplicateArcher({
+    draw, roster, sourceIndex: 0, destination: 2, lastTargets: [1, 1], lastDetails: ["Double", "Double"], vegasMode: false,
+  });
+  assert.deepEqual(result.duplicate, { member: "RB-DUP1", face: "3s" });
+  assert.equal(result.draw.find((row) => row["Membership Number"] === "RB-DUP1").Position, "C");
+});

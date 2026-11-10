@@ -232,7 +232,9 @@ export function targetFaceSwaps(highs, { draw, allocations, ...data }) {
     }
     if (!overridden.length) continue;
 
-    const faceOverrides = {};
+    // Requested changes apply on top of the stored overrides.
+    const faceOverrides = { ...(data.faceOverrides ?? {}) };
+    const applied = {};
     for (const index of overridden) {
       const original = draw[index];
       const matches = data.archers
@@ -244,6 +246,7 @@ export function targetFaceSwaps(highs, { draw, allocations, ...data }) {
           + "Use a stable per-archer row identifier to support duplicate names and IDs.");
       }
       faceOverrides[matches[0].archerIndex] = trialDraw[index]["Target Face"];
+      applied[String(original["Membership Number"])] = trialDraw[index]["Target Face"];
     }
 
     // An attempt identical to an earlier one has the same outcome.
@@ -257,7 +260,7 @@ export function targetFaceSwaps(highs, { draw, allocations, ...data }) {
       }
       outcomes.set(signature, outcome);
     }
-    if (outcome.solved) return { ...outcome.solved, failures };
+    if (outcome.solved) return { ...outcome.solved, failures, applied };
     failures.push(`${name} attempt failed: ${outcome.error.message}`);
   }
   throw new Error(`No valid schedule could accommodate the requested face changes. ${failures.join(" | ")}`);
