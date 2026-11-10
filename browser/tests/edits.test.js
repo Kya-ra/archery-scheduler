@@ -267,3 +267,12 @@ test("a duplicate copies a face-swapped source's face", async () => {
   assert.deepEqual(result.duplicate, { member: "RB-DUP1", face: "3s" });
   assert.equal(result.draw.find((row) => row["Membership Number"] === "RB-DUP1").Position, "C");
 });
+
+test("flags more targets than the roster can fill", async () => {
+  const { tooManyTargetsProblem } = await import("../src/scheduler.js");
+  assert.equal(tooManyTargetsProblem(40, [7, 7]), null);
+  assert.equal(tooManyTargetsProblem(40, [10, 10]), null);
+  assert.match(tooManyTargetsProblem(40, [17, 17, 17]), /There are 51 targets.*at most 20/);
+  const roster = ["A", "B", "C"].map((id, index) => record(id, { college: index % 2 ? "UCC" : "QUB" }));
+  await assert.rejects(solve(roster, { targets: [2] }), /There are 2 targets/);
+});

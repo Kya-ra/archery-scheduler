@@ -141,6 +141,16 @@ export function fullCapacityParityProblem(archers, targets, details, vegasMode) 
     : null;
 }
 
+// Every target needs archers from at least two colleges, so every target
+// holds at least two archers.
+export function tooManyTargetsProblem(archerCount, targets) {
+  const total = targets.reduce((sum, count) => sum + Number(count), 0);
+  return 2 * total > archerCount
+    ? `There are ${total} targets, but every target needs at least two archers from different colleges, `
+      + `so ${archerCount} archers can fill at most ${Math.floor(archerCount / 2)}. Reduce the number of targets.`
+    : null;
+}
+
 // Chooses a target for every archer; drawFromTargetSolution then places
 // lanes so that 3s archers share the A/C face and 40s the B/D face.
 export function createTargetScheduleModel({
@@ -186,6 +196,8 @@ export function createTargetScheduleModel({
       throw new Error(`${wanted} archers requested session ${session + 1}, but it has only ${capacities[session]} places.`);
     }
   }
+  const tooMany = tooManyTargetsProblem(archerCount, targets);
+  if (tooMany) throw new Error(tooMany);
   const threeS = archers.filter((archer) => archer._solveFace === "3s").length;
   if (!vegasMode && totalCapacity === archerCount && threeS % 2 === 1) {
     throw new Error(fullCapacityParityMessage(archerCount, threeS));

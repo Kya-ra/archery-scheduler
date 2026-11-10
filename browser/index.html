@@ -57,7 +57,7 @@
           <section class="rail-section competition-section">
             <div class="section-title"><span class="step-number">02</span><h2>Competition</h2></div>
             <label class="field-label" for="session-count">Number of sessions</label>
-            <select id="session-count" class="field-control">
+            <select id="session-count" class="field-control" data-action>
               <option value="1">1 session</option>
               <option value="2" selected>2 sessions</option>
               <option value="3">3 sessions</option>
@@ -74,11 +74,11 @@
           <section class="rail-section mode-section">
             <div class="section-title"><span class="step-number">03</span><h2>Grouping mode</h2></div>
             <div class="mode-options" role="radiogroup" aria-label="Target grouping mode">
-              <label class="mode-option"><input type="radio" name="grouping" value="Campanile" checked /><span class="mode-radio"></span><span><b>Campanile</b><small>At least one non-beginner per target</small></span></label>
-              <label class="mode-option"><input type="radio" name="grouping" value="Cluster by class" /><span class="mode-radio"></span><span><b>Cluster by class</b><small>Best effort, gender-neutral class order</small></span></label>
-              <label class="mode-option"><input type="radio" name="grouping" value="Standard" /><span class="mode-radio"></span><span><b>Standard</b><small>Neither grouping preference</small></span></label>
+              <label class="mode-option"><input type="radio" name="grouping" value="Campanile" checked data-action /><span class="mode-radio"></span><span><b>Campanile</b><small>At least one non-beginner per target</small></span></label>
+              <label class="mode-option"><input type="radio" name="grouping" value="Cluster by class" data-action /><span class="mode-radio"></span><span><b>Cluster by class</b><small>Best effort, gender-neutral class order</small></span></label>
+              <label class="mode-option"><input type="radio" name="grouping" value="Standard" data-action /><span class="mode-radio"></span><span><b>Standard</b><small>Neither grouping preference</small></span></label>
             </div>
-            <label class="toggle-row" for="vegas-mode"><span><b>Replace 3s with Vegas</b><small>Any position; 0–4 per Double target</small></span><input id="vegas-mode" type="checkbox" /><span class="toggle-track"></span></label>
+            <label class="toggle-row" for="vegas-mode"><span><b>Replace 3s with Vegas</b><small>Any position; 0–4 per Double target</small></span><input id="vegas-mode" type="checkbox" data-action /><span class="toggle-track"></span></label>
           </section>
 
           <div class="rail-actions">

@@ -12,7 +12,7 @@ import {
   rosterRecord,
   validateImportedRoster,
 } from "./roster.js";
-import { fitTargetCapacity, fullCapacityParityProblem } from "./scheduler.js";
+import { fitTargetCapacity, fullCapacityParityProblem, tooManyTargetsProblem } from "./scheduler.js";
 import {
   applySessionPreference,
   archerAllocationLabel,
@@ -234,10 +234,10 @@ function renderSessionConfigs() {
     <div class="session-config" data-session="${index}">
       <div class="session-config-title">Session ${index + 1}</div>
       <label>Targets
-        <input class="target-count" type="number" min="1" max="200" value="${state.targetCounts[index]}" aria-label="Targets in session ${index + 1}" />
+        <input class="target-count" type="number" min="1" max="200" value="${state.targetCounts[index]}" aria-label="Targets in session ${index + 1}" data-action />
       </label>
       <label>Detail
-        <select class="target-detail" aria-label="Session ${index + 1} detail" title="Double = four archers per target; Single = two archers per target.">
+        <select class="target-detail" aria-label="Session ${index + 1} detail" title="Double = four archers per target; Single = two archers per target." data-action>
           <option value="Double" ${state.details[index] === "Double" ? "selected" : ""}>Double · 4 archer</option>
           <option value="Single" ${state.details[index] === "Single" ? "selected" : ""}>Single · 2 archer</option>
         </select>
@@ -249,6 +249,7 @@ function renderSessionConfigs() {
       state.capacityEdited = true;
       state.targetCounts[index] = Math.max(1, Math.min(200, Number(input.value) || 1));
       renderCapacity();
+      scheduleRegeneration();
     });
   });
   elements.sessionConfigs.querySelectorAll(".target-detail").forEach((select, index) => {
@@ -256,6 +257,7 @@ function renderSessionConfigs() {
       state.capacityEdited = true;
       state.details[index] = select.value;
       renderCapacity();
+      scheduleRegeneration();
     });
   });
   renderCapacity();
@@ -272,13 +274,15 @@ function renderCapacity() {
     ? fullCapacityParityProblem(effectiveFaces, state.targetCounts, state.details, elements.vegas.checked)
     : null;
   const short = needed > 0 && total < needed;
-  elements.totalCapacity.classList.toggle("capacity-short", short || Boolean(parity));
+  const tooMany = needed && !short ? tooManyTargetsProblem(needed, state.targetCounts) : null;
+  const problem = short ? "short" : tooMany ?? parity;
+  elements.totalCapacity.classList.toggle("capacity-short", Boolean(problem));
   elements.totalCapacity.textContent = short ? `${total} / ${needed} places` : `${total} places`;
   if (state.busy) return;
   if (short) {
     elements.runNote.textContent = `There are not enough places for every archer. Add ${needed - total} places before generating.`;
-  } else if (parity) {
-    elements.runNote.textContent = parity;
+  } else if (tooMany || parity) {
+    elements.runNote.textContent = tooMany ?? parity;
   } else if (needed) {
     elements.runNote.textContent = `${needed} archers ready · changes remain in this browser tab.`;
   } else {
@@ -286,7 +290,7 @@ function renderCapacity() {
       ? "Choose a schedule file to copy its allocations."
       : "Import a roster to get started.";
   }
-  elements.generate.disabled = !needed || short || Boolean(parity);
+  elements.generate.disabled = !needed || Boolean(problem);
 }
 
 function setBusy(busy, message = "") {
@@ -393,6 +397,9 @@ function handleFile(file) {
         const capacity = importedCapacity(draw);
         state.lastTargets = capacity.targets;
         state.lastDetails = capacity.details;
+        // Show the copied layout in the setup panel, so a later Generate or
+        // settings change builds on it.
+        showCapacity(capacity.targets, capacity.details);
         state.editMember = null;
         const roster = incoming.map(rosterRecord);
         commit({
@@ -453,7 +460,7 @@ function clearAll() {
 
 // ---- Generate ----
 
-function generate() {
+function generate({ automatic = false } = {}) {
   const archers = normalized();
   if (!archers.length) return;
   const targets = [...state.targetCounts];
@@ -462,8 +469,45 @@ function generate() {
     const solved = await runSolver("solve", solvePayload(archers, targets, details));
     state.lastTargets = targets;
     state.lastDetails = details;
-    commit({ roster: state.roster, draw: solved.draw, status: solved.status, notice: `Schedule generated: ${solved.status}` });
-  }, `Solving in a background worker; this may take up to ${timeLimit} seconds.`);
+    commit({
+      roster: state.roster,
+      draw: solved.draw,
+      status: solved.status,
+      notice: automatic
+        ? `Schedule regenerated for the new settings, keeping existing allocations where valid: ${solved.status}`
+        : `Schedule generated: ${solved.status}`,
+    });
+  }, automatic
+    ? `Regenerating for the new settings; this may take up to ${timeLimit} seconds.`
+    : `Solving in a background worker; this may take up to ${timeLimit} seconds.`);
+}
+
+// Sets the setup panel to a session layout.
+function showCapacity(targets, details) {
+  const count = targets.length;
+  if (!elements.sessionCount.querySelector(`option[value="${count}"]`)) {
+    elements.sessionCount.insertAdjacentHTML("beforeend", `<option value="${count}">${count} sessions</option>`);
+  }
+  elements.sessionCount.value = String(count);
+  state.targetCounts = [...targets];
+  state.details = [...details];
+  state.capacityEdited = true;
+  renderSessionConfigs();
+}
+
+// With a draw on screen, a setup change regenerates from it once the input
+// settles. Invalid setups are only flagged.
+let regenerationTimer = 0;
+function scheduleRegeneration() {
+  window.clearTimeout(regenerationTimer);
+  if (!state.draw || !state.roster.length) return;
+  regenerationTimer = window.setTimeout(() => {
+    if (state.busy) {
+      scheduleRegeneration();
+      return;
+    }
+    if (!elements.generate.disabled) generate({ automatic: true });
+  }, 800);
 }
 
 // Re-solves an updated roster with the last generated capacity, dropping
@@ -862,8 +906,13 @@ elements.clearAll.addEventListener("click", clearAll);
 elements.sessionCount.addEventListener("change", () => {
   state.capacityEdited = true;
   renderSessionConfigs();
+  scheduleRegeneration();
 });
-elements.vegas.addEventListener("change", renderCapacity);
+elements.vegas.addEventListener("change", () => {
+  renderCapacity();
+  scheduleRegeneration();
+});
+elements.mode.forEach((input) => input.addEventListener("change", scheduleRegeneration));
 elements.generate.addEventListener("click", generate);
 elements.download.addEventListener("click", () => {
   if (state.draw) downloadBlob("shooting_list.csv", shootingListCsv(state.draw), "text/csv;charset=utf-8");
