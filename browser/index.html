@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#14111b" />
+    <meta name="description" content="Build archery target assignments in your browser." />
+    <title>Archery Scheduler · Browser Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="app-frame">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Archery Scheduler home">
+          <span class="brand-mark" aria-hidden="true"><span></span></span>
+          <span class="brand-name">ARCHERY <b>SCHEDULER</b></span>
+        </a>
+        <div class="topbar-meta">
+          <span class="local-badge"><span class="pulse-dot"></span> BROWSER EDITION</span>
+          <span class="privacy-note">Files stay on this device</span>
+          <button class="theme-button" id="theme-toggle" type="button" aria-label="Switch to light theme" title="Switch to light theme">☼</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="control-rail">
+          <div class="rail-heading">
+            <div class="eyebrow">EVENT SETUP</div>
+            <h1>Build a draw</h1>
+            <p>Load a roster, set capacity, then generate valid target assignments.</p>
+          </div>
+
+          <section class="rail-section import-section">
+            <div class="section-title"><span class="step-number">01</span><h2>Roster</h2></div>
+            <div class="import-modes" role="radiogroup" aria-label="Import mode">
+              <label><input type="radio" name="import-mode" value="roster" checked /><span>Import roster</span></label>
+              <label><input type="radio" name="import-mode" value="copy" /><span>Copy schedule</span></label>
+            </div>
+            <label class="upload-zone" for="roster-file" id="upload-zone">
+              <span class="upload-icon" aria-hidden="true">↑</span>
+              <span class="upload-title" id="upload-title">Choose roster file</span>
+              <span class="upload-subtitle" id="upload-subtitle">CSV, TSV, XLSX or ODS</span>
+              <input id="roster-file" type="file" accept=".csv,.tsv,.tab,.txt,.xlsx,.ods" />
+            </label>
+            <div class="roster-actions">
+              <button class="text-button" id="download-template" type="button">Download CSV template <span aria-hidden="true">↓</span></button>
+              <button class="text-button clear-button" id="clear-all" type="button" disabled>Clear all</button>
+            </div>
+            <div class="roster-status" id="roster-status" aria-live="polite">
+              <span class="status-dot"></span><span>No roster loaded</span>
+            </div>
+            <div class="roster-preview" id="roster-preview" hidden></div>
+          </section>
+
+          <section class="rail-section competition-section">
+            <div class="section-title"><span class="step-number">02</span><h2>Competition</h2></div>
+            <label class="field-label" for="session-count">Number of sessions</label>
+            <select id="session-count" class="field-control">
+              <option value="1">1 session</option>
+              <option value="2" selected>2 sessions</option>
+              <option value="3">3 sessions</option>
+              <option value="4">4 sessions</option>
+              <option value="5">5 sessions</option>
+              <option value="6">6 sessions</option>
+              <option value="7">7 sessions</option>
+              <option value="8">8 sessions</option>
+            </select>
+            <div class="session-configs" id="session-configs"></div>
+            <div class="capacity-line"><span>Total capacity</span><strong id="total-capacity">136 places</strong></div>
+          </section>
+
+          <section class="rail-section mode-section">
+            <div class="section-title"><span class="step-number">03</span><h2>Grouping mode</h2></div>
+            <div class="mode-options" role="radiogroup" aria-label="Target grouping mode">
+              <label class="mode-option"><input type="radio" name="grouping" value="Campanile" checked /><span class="mode-radio"></span><span><b>Campanile</b><small>At least one non-beginner per target</small></span></label>
+              <label class="mode-option"><input type="radio" name="grouping" value="Cluster by class" /><span class="mode-radio"></span><span><b>Cluster by class</b><small>Best effort, gender-neutral class order</small></span></label>
+              <label class="mode-option"><input type="radio" name="grouping" value="Standard" /><span class="mode-radio"></span><span><b>Standard</b><small>Neither grouping preference</small></span></label>
+            </div>
+            <label class="toggle-row" for="vegas-mode"><span><b>Replace 3s with Vegas</b><small>Any position; 0–4 per Double target</small></span><input id="vegas-mode" type="checkbox" /><span class="toggle-track"></span></label>
+          </section>
+
+          <div class="rail-actions">
+            <button class="generate-button" id="generate-button" type="button" disabled>
+              <span class="generate-label">Generate schedule</span><span class="button-arrow" aria-hidden="true">↗</span>
+            </button>
+            <p class="run-note" id="run-note">Import a roster to get started.</p>
+          </div>
+        </aside>
+
+        <section class="results-area" aria-live="polite">
+          <div class="results-header">
+            <div>
+              <div class="eyebrow">SCHEDULING DESK</div>
+              <h2 id="results-title">Your target list</h2>
+              <p id="results-subtitle">A valid draw will appear here after generation.</p>
+            </div>
+            <div class="result-actions" id="result-actions" hidden>
+              <span class="solver-status" id="solver-status"></span>
+              <button class="download-button" id="download-workbook" type="button" data-action><span aria-hidden="true">↓</span> Excel workbook</button>
+              <button class="download-button" id="download-draw" type="button" data-action><span aria-hidden="true">↓</span> Shooting list CSV</button>
+            </div>
+          </div>
+
+          <div class="notice" id="notice" role="status" hidden></div>
+
+          <div class="empty-canvas" id="empty-canvas">
+            <div class="empty-target" aria-hidden="true"><span></span><i></i><b></b></div>
+            <div class="empty-copy"><strong>Ready when you are</strong><span>Your roster and target assignments stay in this browser session.</span></div>
+          </div>
+
+          <section class="roster-section" id="roster-section" hidden>
+            <details class="tool" open>
+              <summary><span class="eyebrow">ROSTER</span><span id="roster-summary-title">Archers loaded</span></summary>
+              <div class="table-scroll" id="roster-table"></div>
+            </details>
+          </section>
+
+          <div class="schedule-content" id="schedule-content" hidden>
+            <div class="metrics-strip" id="metrics-strip"></div>
+            <section class="report-section">
+              <div class="section-heading"><div><div class="eyebrow">SESSIONS</div><h3>Session summary</h3></div></div>
+              <div class="table-scroll" id="session-summary"></div>
+            </section>
+            <section class="class-summary-section">
+              <div class="section-heading"><div><div class="eyebrow">ROSTER MIX</div><h3>Archers per class</h3></div><span class="section-side-note">CLASS COUNTS</span></div>
+              <div class="class-table-wrap" id="class-counts"></div>
+            </section>
+            <section class="draw-section">
+              <div class="section-heading"><div><div class="eyebrow">ALLOCATIONS</div><h3>Shooting list</h3></div><span class="section-side-note" id="draw-count"></span></div>
+              <div class="sessions-output" id="sessions-output"></div>
+            </section>
+
+            <section class="report-section modify-section" id="modify-section">
+              <div class="section-heading"><div><div class="eyebrow">EDITING</div><h3>Modify the draw</h3></div></div>
+
+              <form class="tool-panel" id="edit-archer-form" hidden>
+                <div class="tool-panel-title"><h4 id="edit-archer-title">Edit archer</h4></div>
+                <div class="field-grid" id="edit-archer-fields"></div>
+                <div class="tool-actions">
+                  <button class="action-button" type="submit" data-action>Save archer details</button>
+                  <button class="secondary-button" type="button" id="cancel-edit" data-action>Cancel editing</button>
+                </div>
+              </form>
+
+              <details class="tool">
+                <summary>Duplicate archer into another session</summary>
+                <form class="tool-form" id="duplicate-form">
+                  <label class="field-label">Archer allocation to duplicate<select class="field-control" id="duplicate-source"></select></label>
+                  <label class="field-label">Destination session<select class="field-control" id="duplicate-destination"></select></label>
+                  <p class="tool-note" id="duplicate-note" hidden>At least two sessions are required.</p>
+                  <div class="tool-actions"><button class="action-button" type="submit" id="duplicate-submit" data-action>Duplicate archer</button></div>
+                </form>
+              </details>
+
+              <details class="tool">
+                <summary>Delete an archer or allocation</summary>
+                <form class="tool-form" id="delete-form">
+                  <div class="choice-row" role="radiogroup" aria-label="What would you like to delete?">
+                    <label><input type="radio" name="delete-mode" value="allocation" checked /> This allocation only</label>
+                    <label><input type="radio" name="delete-mode" value="archer" /> Archer entirely (all sessions)</label>
+                  </div>
+                  <label class="field-label" id="delete-allocation-label">Allocation to delete<select class="field-control" id="delete-allocation"></select></label>
+                  <label class="field-label" id="delete-archer-label" hidden>Archer to delete from all sessions<select class="field-control" id="delete-archer"></select></label>
+                  <div class="tool-actions"><button class="action-button danger" type="submit" id="delete-submit" data-action>Delete allocation</button></div>
+                </form>
+              </details>
+
+              <details class="tool">
+                <summary>Batch session changes</summary>
+                <form class="tool-form" id="batch-form">
+                  <p class="tool-note">Enter one archer allocation and destination session per line, for example 1.14A 2. All changes are validated and scheduled together.</p>
+                  <label class="field-label">Allocation and destination session (one per line)<textarea class="field-control" id="batch-text" rows="4" placeholder="1.14A 2&#10;2.16B 3&#10;3.2C 1"></textarea></label>
+                  <div class="tool-actions"><button class="action-button" type="submit" data-action>Apply batch session changes</button></div>
+                </form>
+              </details>
+
+              <details class="tool">
+                <summary>Swap session/target</summary>
+                <form class="tool-form" id="swap-form">
+                  <label class="field-label">Archer to move<select class="field-control" id="swap-member"></select></label>
+                  <div class="choice-row" role="radiogroup" aria-label="Swap type">
+                    <label><input type="radio" name="swap-mode" value="preference" checked /> Generic session preference</label>
+                    <label><input type="radio" name="swap-mode" value="archer" /> Swap with specific archer</label>
+                  </div>
+                  <div id="swap-preference">
+                    <label class="field-label" id="swap-sessions-label">Target session(s), comma-separated (e.g. 1, 3)<input class="field-control" id="swap-sessions" /></label>
+                    <p class="tool-note" id="swap-single-session" hidden>Only one session is configured, so there is nothing to swap.</p>
+                  </div>
+                  <label class="field-label" id="swap-destination-label" hidden>Swap with archer or empty position<select class="field-control" id="swap-destination"></select></label>
+                  <div class="tool-actions"><button class="action-button" type="submit" id="swap-submit" data-action>Apply session preference</button></div>
+                </form>
+              </details>
+
+              <details class="tool">
+                <summary>Swap target face type</summary>
+                <form class="tool-form" id="face-form">
+                  <p class="tool-note">Enter allocations separated by commas, e.g. 1.14A, 2.16B, 3.2C. Each successful change moves the archer to the opposite face type.</p>
+                  <label class="field-label">Allocations to switch face type<input class="field-control" id="face-text" /></label>
+                  <div class="tool-actions"><button class="action-button" type="submit" data-action>Apply target face swaps</button></div>
+                </form>
+              </details>
+
+              <details class="tool">
+                <summary>Swap target block numbers</summary>
+                <form class="tool-form" id="blocks-form">
+                  <label class="field-label">Target blocks to swap<input class="field-control" id="blocks-text" placeholder="8-9" title="Swaps target numbers within each session. Sessions, positions, faces and archer details remain unchanged." /></label>
+                  <p class="tool-note">Swaps target numbers within each session, or one session as 1.8-9. Sessions, positions, faces and archer details remain unchanged.</p>
+                  <div class="tool-actions"><button class="action-button" type="submit" data-action>Swap target numbers</button></div>
+                </form>
+              </details>
+
+              <details class="tool">
+                <summary>Swap archer class</summary>
+                <form class="tool-form" id="class-form">
+                  <p class="tool-note">Enter one allocation and destination class per line, e.g. 1.14A RBF. Class changes update the saved roster and recalculate the target face before the schedule is regenerated.</p>
+                  <label class="field-label">Allocation and destination class (one per line)<textarea class="field-control" id="class-text" rows="4" placeholder="1.14A RBF&#10;2.16B BAO&#10;3.2C CO"></textarea></label>
+                  <div class="tool-actions"><button class="action-button" type="submit" data-action>Apply class swaps</button></div>
+                </form>
+              </details>
+            </section>
+
+            <section class="report-section">
+              <div class="section-heading"><div><div class="eyebrow">KNOCKOUTS</div><h3>Head-to-head analysis</h3></div></div>
+              <p class="tool-note">Only archers marked Both Days (or yes/1 in a Shooting H2H column) are eligible. Guest and Senior League archers are excluded.</p>
+              <div class="table-scroll" id="hth-table"></div>
+            </section>
+
+            <section class="report-section">
+              <div class="section-heading"><div><div class="eyebrow">EXPORT</div><h3>IANSEO participant import</h3></div></div>
+              <p class="tool-note">Copy the tab-separated rows into IANSEO List Load. The data is headerless, with the 21 columns in the order listed below. Session and fields not applicable to this event are left blank.</p>
+              <div class="notice warning" id="ianseo-warning" hidden></div>
+              <div id="ianseo-ready">
+                <textarea class="field-control ianseo-text" id="ianseo-text" rows="10" readonly aria-label="IANSEO text" title="Headerless, tab-separated rows for IANSEO List Load."></textarea>
+                <div class="tool-actions">
+                  <button class="action-button" type="button" id="ianseo-copy">Copy all</button>
+                  <button class="secondary-button" type="button" id="ianseo-download">Download tab-separated text</button>
+                  <span class="tool-note" id="ianseo-copy-status" role="status" aria-live="polite"></span>
+                </div>
+                <details class="tool">
+                  <summary>Preview columns and values</summary>
+                  <div class="table-scroll" id="ianseo-preview"></div>
+                </details>
+              </div>
+            </section>
+          </div>
+
+          <footer class="page-footer"><span>ARCHERY SCHEDULER / LOCAL COMPUTE</span><span>No roster data is uploaded</span></footer>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

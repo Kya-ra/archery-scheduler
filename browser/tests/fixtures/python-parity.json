@@ -1,0 +1,1115 @@
+{
+ "split": [
+  [
+   "Pádraig",
+   "MAC LOCHLAINN"
+  ],
+  [
+   "Pádraig",
+   "Mac Lochlainn"
+  ],
+  [
+   "Mary Ann",
+   "Ní Bhriain"
+  ],
+  [
+   "Seán",
+   "Ó Briain"
+  ],
+  [
+   "John",
+   "Smith"
+  ],
+  [
+   "Cher",
+   ""
+  ],
+  [
+   "",
+   ""
+  ],
+  [
+   "a b",
+   "c"
+  ],
+  [
+   "JOHN",
+   "SMITH"
+  ],
+  [
+   "Anne-Marie",
+   "O'Neill"
+  ],
+  [
+   "Eoin",
+   "mac Giolla"
+  ],
+  [
+   "Áine",
+   "NÍ CHONAILL"
+  ],
+  [
+   "Mary Ann",
+   "O Sullivan"
+  ],
+  [
+   "van der",
+   "BERG"
+  ]
+ ],
+ "prepare": [
+  {
+   "value": [
+    {
+     "First Name": "Aoife",
+     "Last Name": "Ní Bhriain",
+     "Bow Type": "recurve",
+     "College": "QUB",
+     "Gender": "female",
+     "Category": "advanced",
+     "Membership Number": "101",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "Aoife Ní Bhriain",
+     "_face": "3s",
+     "_code": "RAF"
+    },
+    {
+     "First Name": "Seán",
+     "Last Name": "Ó Briain",
+     "Bow Type": "barebow",
+     "College": "UCD",
+     "Gender": "open",
+     "Category": "beginner",
+     "Membership Number": "102",
+     "Which Days": "saturday only",
+     "Session Preference": "",
+     "_name": "Seán Ó Briain",
+     "_face": "40",
+     "_code": "BBO"
+    },
+    {
+     "First Name": "Liam",
+     "Last Name": "Byrne",
+     "Bow Type": "compound",
+     "College": "UCC",
+     "Gender": "f",
+     "Category": "intermediate",
+     "Membership Number": "103",
+     "Which Days": "both days",
+     "Session Preference": "2",
+     "_name": "Liam Byrne",
+     "_face": "3s",
+     "_code": "CF"
+    },
+    {
+     "First Name": "Cara",
+     "Last Name": "Doyle",
+     "Bow Type": "recurve",
+     "College": "DCU",
+     "Gender": "open",
+     "Category": "guest",
+     "Membership Number": "104",
+     "Which Days": "no h2h",
+     "Session Preference": "",
+     "_name": "Cara Doyle",
+     "_face": "3s",
+     "_code": "RG"
+    },
+    {
+     "First Name": "Niamh",
+     "Last Name": "Walsh",
+     "Bow Type": "recurve",
+     "College": "UL",
+     "Gender": "senior league",
+     "Category": "beginner",
+     "Membership Number": "105",
+     "Which Days": "sunday only",
+     "Session Preference": "1, 2",
+     "_name": "Niamh Walsh",
+     "_face": "3s",
+     "_code": "RS"
+    },
+    {
+     "First Name": "Eoin",
+     "Last Name": "Mac Giolla",
+     "Bow Type": "barebow",
+     "College": "TUD",
+     "Gender": "female",
+     "Category": "intermediate",
+     "Membership Number": "106",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "Eoin Mac Giolla",
+     "_face": "40",
+     "_code": "BIF"
+    },
+    {
+     "First Name": "Ola",
+     "Last Name": "Nowak",
+     "Bow Type": "recurve",
+     "College": "UG",
+     "Gender": "open",
+     "Category": "mystery",
+     "Membership Number": "107",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "Ola Nowak",
+     "_face": "40",
+     "_code": ""
+    }
+   ]
+  },
+  {
+   "error": "Unknown bow type for Aoife Ní Bhriain: longbow"
+  },
+  {
+   "error": "Duplicate membership numbers: 101"
+  },
+  {
+   "value": [
+    {
+     "First Name": "Pádraig",
+     "Last Name": "MAC LOCHLAINN",
+     "Bow Type": "recurve",
+     "College": "QUB",
+     "Gender": "female",
+     "Category": "advanced",
+     "Membership Number": "201",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "Pádraig MAC LOCHLAINN",
+     "_face": "3s",
+     "_code": "RAF"
+    },
+    {
+     "First Name": "Mary Ann",
+     "Last Name": "Ní Bhriain",
+     "Bow Type": "barebow",
+     "College": "UCD",
+     "Gender": "open",
+     "Category": "beginner",
+     "Membership Number": "202",
+     "Which Days": "no h2h",
+     "Session Preference": "2",
+     "_name": "Mary Ann Ní Bhriain",
+     "_face": "40",
+     "_code": "BBO"
+    },
+    {
+     "First Name": "Cher",
+     "Last Name": "",
+     "Bow Type": "compound",
+     "College": "UL",
+     "Gender": "open",
+     "Category": "advanced",
+     "Membership Number": "203",
+     "Which Days": "",
+     "Session Preference": "",
+     "_name": "Cher ",
+     "_face": "3s",
+     "_code": "CO"
+    }
+   ]
+  },
+  {
+   "value": [
+    {
+     "First Name": "Seán",
+     "Last Name": "Ó Briain",
+     "Bow Type": "recurve",
+     "College": "DCU",
+     "Gender": "open",
+     "Category": "intermediate",
+     "Membership Number": "301",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "Seán Ó Briain",
+     "_face": "40",
+     "_code": "RIO"
+    }
+   ]
+  },
+  {
+   "value": [
+    {
+     "First Name": "Aoife",
+     "Last Name": "Ní Bhriain",
+     "Bow Type": "recurve",
+     "College": "QUEENS",
+     "Gender": "u",
+     "Category": "advanced",
+     "Membership Number": "401",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "Aoife Ní Bhriain",
+     "_face": "3s",
+     "_code": "RAO"
+    },
+    {
+     "First Name": "Liam",
+     "Last Name": "Byrne",
+     "Bow Type": "barebow",
+     "College": "UCD",
+     "Gender": "u",
+     "Category": "beginner",
+     "Membership Number": "402",
+     "Which Days": "no h2h",
+     "Session Preference": "",
+     "_name": "Liam Byrne",
+     "_face": "40",
+     "_code": "BBO"
+    },
+    {
+     "First Name": "Cara",
+     "Last Name": "Doyle",
+     "Bow Type": "compound",
+     "College": "UL",
+     "Gender": "u",
+     "Category": "guest",
+     "Membership Number": "403",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "Cara Doyle",
+     "_face": "3s",
+     "_code": "CG"
+    },
+    {
+     "First Name": "Niamh",
+     "Last Name": "Walsh",
+     "Bow Type": "recurve",
+     "College": "UG",
+     "Gender": "u",
+     "Category": "senior league",
+     "Membership Number": "404",
+     "Which Days": "no h2h",
+     "Session Preference": "",
+     "_name": "Niamh Walsh",
+     "_face": "3s",
+     "_code": "RS"
+    }
+   ]
+  },
+  {
+   "value": [
+    {
+     "First Name": "Orla",
+     "Last Name": "Kelly",
+     "Bow Type": "recurve",
+     "College": "UCC",
+     "Gender": "female",
+     "Category": "intermediate",
+     "Membership Number": "501",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "Orla Kelly",
+     "_face": "40",
+     "_code": "RIF"
+    },
+    {
+     "First Name": "Tom",
+     "Last Name": "Ryan",
+     "Bow Type": "barebow",
+     "College": "TUD",
+     "Gender": "open",
+     "Category": "",
+     "Membership Number": "502",
+     "Which Days": "no h2h",
+     "Session Preference": "",
+     "_name": "Tom Ryan",
+     "_face": "40",
+     "_code": ""
+    },
+    {
+     "First Name": "Ann",
+     "Last Name": "Lynch",
+     "Bow Type": "compound",
+     "College": "MU",
+     "Gender": "",
+     "Category": "",
+     "Membership Number": "503",
+     "Which Days": "no h2h",
+     "Session Preference": "",
+     "_name": "Ann Lynch",
+     "_face": "3s",
+     "_code": "CO"
+    }
+   ]
+  },
+  {
+   "value": [
+    {
+     "First Name": "A",
+     "Last Name": "B",
+     "Bow Type": "recurve",
+     "College": "QUB",
+     "Gender": "open",
+     "Category": "advanced",
+     "Membership Number": "",
+     "Which Days": "both days",
+     "Session Preference": "",
+     "_name": "A B",
+     "_face": "3s",
+     "_code": "RAO"
+    }
+   ]
+  }
+ ],
+ "restore": [
+  {
+   "value": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "First Name": "Aoife",
+     "Last Name": "Ní Bhriain",
+     "College": "QUB",
+     "Bow Type": "recurve",
+     "Target Face": "3s",
+     "Category": "advanced",
+     "Gender": "female",
+     "Which Days": "both days",
+     "Membership Number": "101",
+     "Category Code": "RAF",
+     "Session Preference": "",
+     "Head-to-Head Eligible": true
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "First Name": "Seán",
+     "Last Name": "Ó Briain",
+     "College": "UCD",
+     "Bow Type": "barebow",
+     "Target Face": "40",
+     "Category": "beginner",
+     "Gender": "open",
+     "Which Days": "saturday only",
+     "Membership Number": "102",
+     "Category Code": "BBO",
+     "Session Preference": "",
+     "Head-to-Head Eligible": false
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "First Name": "Liam",
+     "Last Name": "Byrne",
+     "College": "UCC",
+     "Bow Type": "compound",
+     "Target Face": "3s",
+     "Category": "intermediate",
+     "Gender": "f",
+     "Which Days": "both days",
+     "Membership Number": "103",
+     "Category Code": "CF",
+     "Session Preference": "2",
+     "Head-to-Head Eligible": true
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "First Name": "Cara",
+     "Last Name": "Doyle",
+     "College": "DCU",
+     "Bow Type": "recurve",
+     "Target Face": "3s",
+     "Category": "guest",
+     "Gender": "open",
+     "Which Days": "no h2h",
+     "Membership Number": "104",
+     "Category Code": "RG",
+     "Session Preference": "",
+     "Head-to-Head Eligible": false
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "First Name": "Niamh",
+     "Last Name": "Walsh",
+     "College": "UL",
+     "Bow Type": "recurve",
+     "Target Face": "3s",
+     "Category": "beginner",
+     "Gender": "senior league",
+     "Which Days": "sunday only",
+     "Membership Number": "105",
+     "Category Code": "RS",
+     "Session Preference": "1, 2",
+     "Head-to-Head Eligible": false
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "First Name": "Eoin",
+     "Last Name": "Mac Giolla",
+     "College": "TUD",
+     "Bow Type": "barebow",
+     "Target Face": "40",
+     "Category": "intermediate",
+     "Gender": "female",
+     "Which Days": "both days",
+     "Membership Number": "106",
+     "Category Code": "BIF",
+     "Session Preference": "",
+     "Head-to-Head Eligible": true
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "First Name": "Ola",
+     "Last Name": "Nowak",
+     "College": "UG",
+     "Bow Type": "recurve",
+     "Target Face": "40",
+     "Category": "mystery",
+     "Gender": "open",
+     "Which Days": "both days",
+     "Membership Number": "107",
+     "Category Code": "",
+     "Session Preference": "",
+     "Head-to-Head Eligible": false
+    }
+   ]
+  },
+  {
+   "value": [
+    {
+     "Session": 1,
+     "Target": 3,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "First Name": "Aoife",
+     "Last Name": "Ní Bhriain",
+     "College": "QUB",
+     "Bow Type": "recurve",
+     "Target Face": "3s",
+     "Category": "advanced",
+     "Gender": "female",
+     "Which Days": "both days",
+     "Membership Number": "101",
+     "Category Code": "RAF",
+     "Session Preference": "",
+     "Head-to-Head Eligible": true
+    },
+    {
+     "Session": 2,
+     "Target": 4,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "First Name": "Seán",
+     "Last Name": "Ó Briain",
+     "College": "UCD",
+     "Bow Type": "barebow",
+     "Target Face": "40",
+     "Category": "beginner",
+     "Gender": "open",
+     "Which Days": "saturday only",
+     "Membership Number": "102",
+     "Category Code": "BBO",
+     "Session Preference": "",
+     "Head-to-Head Eligible": false
+    }
+   ]
+  },
+  {
+   "value": [
+    {
+     "Session": 1,
+     "Target": 3,
+     "Position": "A",
+     "Archer": "Liam Byrne",
+     "First Name": "Liam",
+     "Last Name": "Byrne",
+     "College": "UCC",
+     "Bow Type": "compound",
+     "Target Face": "3s",
+     "Category": "intermediate",
+     "Gender": "f",
+     "Which Days": "both days",
+     "Membership Number": "103",
+     "Category Code": "CF",
+     "Session Preference": "2",
+     "Head-to-Head Eligible": true
+    }
+   ]
+  },
+  {
+   "error": "Spreadsheet row 3 references membership number '999', which is not in the roster. Check that the imported schedule and roster match."
+  },
+  {
+   "error": "Invalid or missing position 'E' on spreadsheet row 2. A numeric target requires a separate A/B/C/D Position."
+  },
+  {
+   "error": "Conflicting target positions on spreadsheet row 2: 'A' in Target and 'B' in Position."
+  },
+  {
+   "error": "Imported sessions must be numbered consecutively from 1. Found sessions: [1, 3]."
+  },
+  {
+   "error": "Duplicate allocation 1/3A on spreadsheet row 3."
+  },
+  {
+   "error": "Archer 'Aoife Ní Bhriain' has multiple imported allocations (rows 2 and 3). Each archer must have exactly one allocation in the imported draw."
+  },
+  {
+   "error": "Cannot copy the existing schedule: no Session column found. Available columns: ['Target', 'Position', 'Bib']"
+  },
+  {
+   "error": "Cannot copy the existing schedule: no Target column found. Expected a target number, optionally with a position letter."
+  },
+  {
+   "error": "The name 'Ann Same' on spreadsheet row 2 matches multiple roster members. Supply membership numbers to disambiguate."
+  },
+  {
+   "error": "Session is blank on spreadsheet row 2. No schedule was copied."
+  }
+ ],
+ "hth": [
+  [
+   {
+    "Category": "BIF",
+    "Entrants": 1,
+    "Elimination Rounds": 0,
+    "Bracket Matches": 0,
+    "Bronze Match": "No",
+    "Total Matches Including Bronze": 0,
+    "Matches By Round": ""
+   },
+   {
+    "Category": "CF",
+    "Entrants": 1,
+    "Elimination Rounds": 0,
+    "Bracket Matches": 0,
+    "Bronze Match": "No",
+    "Total Matches Including Bronze": 0,
+    "Matches By Round": ""
+   },
+   {
+    "Category": "RAF",
+    "Entrants": 1,
+    "Elimination Rounds": 0,
+    "Bracket Matches": 0,
+    "Bronze Match": "No",
+    "Total Matches Including Bronze": 0,
+    "Matches By Round": ""
+   }
+  ],
+  [
+   {
+    "Category": "BIF",
+    "Entrants": 10,
+    "Elimination Rounds": 4,
+    "Bracket Matches": 9,
+    "Bronze Match": "Yes",
+    "Total Matches Including Bronze": 10,
+    "Matches By Round": "2 → 4 → 2 → GB"
+   },
+   {
+    "Category": "BIO",
+    "Entrants": 22,
+    "Elimination Rounds": 5,
+    "Bracket Matches": 21,
+    "Bronze Match": "Yes",
+    "Total Matches Including Bronze": 22,
+    "Matches By Round": "6 → 8 → 4 → 2 → GB"
+   },
+   {
+    "Category": "CF",
+    "Entrants": 6,
+    "Elimination Rounds": 3,
+    "Bracket Matches": 5,
+    "Bronze Match": "Yes",
+    "Total Matches Including Bronze": 6,
+    "Matches By Round": "2 → 2 → GB"
+   },
+   {
+    "Category": "CO",
+    "Entrants": 12,
+    "Elimination Rounds": 4,
+    "Bracket Matches": 11,
+    "Bronze Match": "Yes",
+    "Total Matches Including Bronze": 12,
+    "Matches By Round": "4 → 4 → 2 → GB"
+   },
+   {
+    "Category": "RBF",
+    "Entrants": 20,
+    "Elimination Rounds": 5,
+    "Bracket Matches": 19,
+    "Bronze Match": "Yes",
+    "Total Matches Including Bronze": 20,
+    "Matches By Round": "4 → 8 → 4 → 2 → GB"
+   },
+   {
+    "Category": "RBO",
+    "Entrants": 8,
+    "Elimination Rounds": 3,
+    "Bracket Matches": 7,
+    "Bronze Match": "Yes",
+    "Total Matches Including Bronze": 8,
+    "Matches By Round": "4 → 2 → GB"
+   }
+  ]
+ ],
+ "ianseo": [
+  {
+   "value": [
+    {
+     "Bib": "101",
+     "Session": "1",
+     "Division": "R",
+     "Class": "AF",
+     "Target": "1A",
+     "Individual - Division/Class": "1",
+     "Team - Division/Class": "1",
+     "Ind. Events": "1",
+     "Team Events": "1",
+     "Mixed Team Events": "1",
+     "Family Name": "Ní Bhriain",
+     "Name": "Aoife",
+     "Gender": "U",
+     "Country": "QUB",
+     "Country Name": "Queens",
+     "Date of Birth": "",
+     "Subclass": "",
+     "Country 2": "",
+     "Country Name 2": "",
+     "Country 3": "",
+     "Country Name 3": ""
+    },
+    {
+     "Bib": "102",
+     "Session": "1",
+     "Division": "B",
+     "Class": "BO",
+     "Target": "1B",
+     "Individual - Division/Class": "1",
+     "Team - Division/Class": "1",
+     "Ind. Events": "",
+     "Team Events": "",
+     "Mixed Team Events": "",
+     "Family Name": "Ó Briain",
+     "Name": "Seán",
+     "Gender": "U",
+     "Country": "UCD",
+     "Country Name": "UCD",
+     "Date of Birth": "",
+     "Subclass": "",
+     "Country 2": "",
+     "Country Name 2": "",
+     "Country 3": "",
+     "Country Name 3": ""
+    },
+    {
+     "Bib": "103",
+     "Session": "1",
+     "Division": "C",
+     "Class": "F",
+     "Target": "1C",
+     "Individual - Division/Class": "1",
+     "Team - Division/Class": "1",
+     "Ind. Events": "1",
+     "Team Events": "1",
+     "Mixed Team Events": "1",
+     "Family Name": "Byrne",
+     "Name": "Liam",
+     "Gender": "U",
+     "Country": "UCC",
+     "Country Name": "Cork",
+     "Date of Birth": "",
+     "Subclass": "",
+     "Country 2": "",
+     "Country Name 2": "",
+     "Country 3": "",
+     "Country Name 3": ""
+    },
+    {
+     "Bib": "104",
+     "Session": "1",
+     "Division": "R",
+     "Class": "G",
+     "Target": "2A",
+     "Individual - Division/Class": "1",
+     "Team - Division/Class": "1",
+     "Ind. Events": "",
+     "Team Events": "",
+     "Mixed Team Events": "",
+     "Family Name": "Doyle",
+     "Name": "Cara",
+     "Gender": "U",
+     "Country": "DCU",
+     "Country Name": "DCU",
+     "Date of Birth": "",
+     "Subclass": "",
+     "Country 2": "",
+     "Country Name 2": "",
+     "Country 3": "",
+     "Country Name 3": ""
+    },
+    {
+     "Bib": "105",
+     "Session": "2",
+     "Division": "R",
+     "Class": "S",
+     "Target": "1A",
+     "Individual - Division/Class": "1",
+     "Team - Division/Class": "1",
+     "Ind. Events": "",
+     "Team Events": "",
+     "Mixed Team Events": "",
+     "Family Name": "Walsh",
+     "Name": "Niamh",
+     "Gender": "U",
+     "Country": "UL",
+     "Country Name": "Limerick",
+     "Date of Birth": "",
+     "Subclass": "",
+     "Country 2": "",
+     "Country Name 2": "",
+     "Country 3": "",
+     "Country Name 3": ""
+    },
+    {
+     "Bib": "106",
+     "Session": "2",
+     "Division": "B",
+     "Class": "IF",
+     "Target": "1B",
+     "Individual - Division/Class": "1",
+     "Team - Division/Class": "1",
+     "Ind. Events": "1",
+     "Team Events": "1",
+     "Mixed Team Events": "1",
+     "Family Name": "Mac Giolla",
+     "Name": "Eoin",
+     "Gender": "U",
+     "Country": "TUD",
+     "Country Name": "TU Dublin",
+     "Date of Birth": "",
+     "Subclass": "",
+     "Country 2": "",
+     "Country Name 2": "",
+     "Country 3": "",
+     "Country Name 3": ""
+    }
+   ]
+  },
+  {
+   "error": "No IANSEO short name configured for college 'UCD'. Add it to college_short_names in config.json."
+  },
+  {
+   "error": "Cannot export Seán Ó Briain: no shooting allocation was found."
+  },
+  {
+   "error": "Cannot export Ola Nowak: invalid category code ''."
+  }
+ ],
+ "swapBlocks": [
+  {
+   "value": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 2,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 2,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ]
+  },
+  {
+   "value": [
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 1,
+     "Target": 3,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 3,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 3,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ]
+  },
+  {
+   "value": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    }
+   ]
+  },
+  {
+   "error": "Choose two different target numbers."
+  },
+  {
+   "error": "Neither target 4 nor target 5 exists."
+  },
+  {
+   "error": "Session 9 does not exist in the current draw."
+  },
+  {
+   "error": "Enter targets as 8-9, or specify a session as 1.8-9."
+  },
+  {
+   "error": "Target numbers must be positive integers."
+  }
+ ],
+ "incompatible": [
+  [],
+  [
+   "1|1"
+  ]
+ ],
+ "classFields": [
+  {
+   "value": {
+    "Bow Type": "recurve",
+    "Category": "beginner",
+    "Gender": "female"
+   }
+  },
+  {
+   "value": {
+    "Bow Type": "compound",
+    "Category": "guest",
+    "Gender": "female"
+   }
+  },
+  {
+   "value": {
+    "Bow Type": "compound",
+    "Category": "advanced",
+    "Gender": "open"
+   }
+  },
+  {
+   "value": {
+    "Bow Type": "compound",
+    "Category": "advanced",
+    "Gender": "female"
+   }
+  },
+  {
+   "value": {
+    "Bow Type": "barebow",
+    "Category": "senior league",
+    "Gender": "female"
+   }
+  },
+  {
+   "value": {
+    "Bow Type": "recurve",
+    "Category": "advanced",
+    "Gender": "open"
+   }
+  },
+  {
+   "error": "Unrecognised class code 'XX'."
+  },
+  {
+   "value": {
+    "Bow Type": "compound",
+    "Category": "senior league",
+    "Gender": "female"
+   }
+  }
+ ],
+ "summary": [
+  [
+   {
+    "Session": 1,
+    "Archers": 4,
+    "Targets_Used": 2
+   },
+   {
+    "Session": 2,
+    "Archers": 3,
+    "Targets_Used": 2
+   }
+  ],
+  []
+ ]
+}

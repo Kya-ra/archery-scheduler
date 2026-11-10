@@ -1,0 +1,3966 @@
+{
+ "split": [
+  "Pádraig MAC LOCHLAINN",
+  "Pádraig Mac Lochlainn",
+  "Mary Ann Ní Bhriain",
+  "Seán Ó Briain",
+  "John Smith",
+  "Cher",
+  "",
+  " a   b  c ",
+  "JOHN SMITH",
+  "Anne-Marie O'Neill",
+  "Eoin mac Giolla",
+  "Áine NÍ CHONAILL",
+  "Mary Ann O Sullivan",
+  "van der BERG"
+ ],
+ "prepare": [
+  {
+   "columns": [
+    "First Name",
+    "Last Name",
+    "Bow Type",
+    "College",
+    "Gender",
+    "Category",
+    "Membership Number",
+    "Which Days",
+    "Session Preference"
+   ],
+   "data": [
+    [
+     "Aoife",
+     "Ní Bhriain",
+     "Recurve",
+     "qub",
+     "Female",
+     "Advanced",
+     "101",
+     "both days",
+     ""
+    ],
+    [
+     "Seán",
+     "Ó Briain",
+     "barebow",
+     "UCD",
+     "open",
+     "beginner",
+     "102",
+     "Saturday",
+     ""
+    ],
+    [
+     "Liam",
+     "Byrne",
+     "compound",
+     "UCC",
+     "f",
+     "intermediate",
+     "103",
+     "yes",
+     "2"
+    ],
+    [
+     "Cara",
+     "Doyle",
+     "recurve",
+     "DCU",
+     "open",
+     "guest",
+     "104",
+     "0",
+     ""
+    ],
+    [
+     "Niamh",
+     "Walsh",
+     "recurve",
+     "UL",
+     "senior league",
+     "beginner",
+     "105",
+     "sunday only",
+     "1, 2"
+    ],
+    [
+     "Eoin",
+     "Mac Giolla",
+     "barebow",
+     "TUD",
+     "female",
+     "intermediate",
+     "106",
+     "both",
+     ""
+    ],
+    [
+     "Ola",
+     "Nowak",
+     "recurve",
+     "UG",
+     "open",
+     "mystery",
+     "107",
+     "both days",
+     ""
+    ]
+   ]
+  },
+  {
+   "columns": [
+    "First Name",
+    "Last Name",
+    "Bow Type",
+    "College",
+    "Gender",
+    "Category",
+    "Membership Number",
+    "Which Days",
+    "Session Preference"
+   ],
+   "data": [
+    [
+     "Aoife",
+     "Ní Bhriain",
+     "longbow",
+     "qub",
+     "Female",
+     "Advanced",
+     "101",
+     "both days",
+     ""
+    ]
+   ]
+  },
+  {
+   "columns": [
+    "First Name",
+    "Last Name",
+    "Bow Type",
+    "College",
+    "Gender",
+    "Category",
+    "Membership Number",
+    "Which Days",
+    "Session Preference"
+   ],
+   "data": [
+    [
+     "Aoife",
+     "Ní Bhriain",
+     "Recurve",
+     "qub",
+     "Female",
+     "Advanced",
+     "101",
+     "both days",
+     ""
+    ],
+    [
+     "Seán",
+     "Ó Briain",
+     "barebow",
+     "UCD",
+     "open",
+     "beginner",
+     "101",
+     "Saturday",
+     ""
+    ]
+   ]
+  },
+  {
+   "columns": [
+    "Archer",
+    "Club",
+    "Sex",
+    "AI Number",
+    "Bow",
+    "Category",
+    "Shooting H2H",
+    "Preferred Session"
+   ],
+   "data": [
+    [
+     "Pádraig MAC LOCHLAINN",
+     "QUB",
+     "Female",
+     "201",
+     "Recurve",
+     "Advanced",
+     "1",
+     ""
+    ],
+    [
+     "Mary Ann Ní Bhriain",
+     "UCD",
+     "open",
+     "202",
+     "barebow",
+     "beginner",
+     "no",
+     "2"
+    ],
+    [
+     "Cher",
+     "UL",
+     "open",
+     "203",
+     "compound",
+     "advanced",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "columns": [
+    "Name",
+    "College",
+    "Gender",
+    "Membership Number",
+    "Bow Type",
+    "Category"
+   ],
+   "data": [
+    [
+     "Seán Ó Briain",
+     "DCU",
+     "open",
+     "301",
+     "recurve",
+     "intermediate"
+    ]
+   ]
+  },
+  {
+   "columns": [
+    "Bib",
+    "Session",
+    "Division",
+    "Class",
+    "Target",
+    "Individual - Division/Class",
+    "Team - Division/Class",
+    "Ind. Events",
+    "Team Events",
+    "Mixed Team Events",
+    "Family Name",
+    "Name",
+    "Gender",
+    "Country",
+    "Country Name",
+    "Date of Birth",
+    "Subclass",
+    "Country 2",
+    "Country Name 2",
+    "Country 3",
+    "Country Name 3"
+   ],
+   "data": [
+    [
+     "401",
+     "1",
+     "R",
+     "AF",
+     "3A",
+     "1",
+     "1",
+     "1",
+     "1",
+     "1",
+     "Ní Bhriain",
+     "Aoife",
+     "U",
+     "QUB",
+     "Queens",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "402",
+     "2",
+     "B",
+     "BO",
+     "4B",
+     "1",
+     "1",
+     "",
+     "",
+     "",
+     "Byrne",
+     "Liam",
+     "U",
+     "UCD",
+     "UCD",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "403",
+     "1",
+     "C",
+     "G",
+     "5C",
+     "1",
+     "1",
+     "1",
+     "",
+     "",
+     "Doyle",
+     "Cara",
+     "U",
+     "UL",
+     "UL",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ],
+    [
+     "404",
+     "1",
+     "R",
+     "S",
+     "5D",
+     "1",
+     "1",
+     "",
+     "",
+     "",
+     "Walsh",
+     "Niamh",
+     "U",
+     "UG",
+     "UG",
+     "",
+     "",
+     "",
+     "",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "columns": [
+    "Bib",
+    "Division",
+    "Class",
+    "Family Name",
+    "Name",
+    "Country",
+    "Ind. Events",
+    "Team Events"
+   ],
+   "data": [
+    [
+     "501",
+     "R",
+     "IF",
+     "Kelly",
+     "Orla",
+     "UCC",
+     "1",
+     "0"
+    ],
+    [
+     "502",
+     "B",
+     "XO",
+     "Ryan",
+     "Tom",
+     "TUD",
+     "0",
+     "0"
+    ],
+    [
+     "503",
+     "C",
+     "",
+     "Lynch",
+     "Ann",
+     "MU",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "columns": [
+    "First Name",
+    "Last Name",
+    "Bow Type",
+    "College",
+    "Gender",
+    "Category",
+    "Membership Number"
+   ],
+   "data": [
+    [
+     "A",
+     "B",
+     "recurve",
+     "QUB",
+     "open",
+     "advanced",
+     ""
+    ]
+   ]
+  }
+ ],
+ "restore": [
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Archer",
+     "College",
+     "Target Face",
+     "Membership Number"
+    ],
+    "data": [
+     [
+      "1",
+      "1",
+      "A",
+      "Aoife Ní Bhriain",
+      "QUB",
+      "3s",
+      "101"
+     ],
+     [
+      "1",
+      "1",
+      "B",
+      "Seán Ó Briain",
+      "UCD",
+      "40",
+      "102"
+     ],
+     [
+      "1",
+      "1",
+      "C",
+      "Liam Byrne",
+      "UCC",
+      "3s",
+      "103"
+     ],
+     [
+      "1",
+      "2",
+      "A",
+      "Cara Doyle",
+      "DCU",
+      "3s",
+      "104"
+     ],
+     [
+      "2",
+      "1",
+      "A",
+      "Niamh Walsh",
+      "UL",
+      "3s",
+      "105"
+     ],
+     [
+      "2",
+      "1",
+      "B",
+      "Eoin Mac Giolla",
+      "TUD",
+      "40",
+      "106"
+     ],
+     [
+      "2",
+      "3",
+      "D",
+      "Ola Nowak",
+      "UG",
+      "40",
+      "107"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "session",
+     "Target Allocation",
+     "Archer"
+    ],
+    "data": [
+     [
+      "1",
+      "3a",
+      "Aoife Ní Bhriain"
+     ],
+     [
+      "2",
+      "4 B",
+      "Seán Ó Briain"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Name",
+     "Family Name"
+    ],
+    "data": [
+     [
+      "1",
+      "3",
+      "A",
+      "Liam",
+      "Byrne"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Bib",
+     "Target Face"
+    ],
+    "data": [
+     [
+      "1",
+      "3",
+      "A",
+      "101.0",
+      "Vegas"
+     ],
+     [
+      "1",
+      "3",
+      "B",
+      "999",
+      "40"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Bib"
+    ],
+    "data": [
+     [
+      "1",
+      "3",
+      "E",
+      "101"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Bib"
+    ],
+    "data": [
+     [
+      "1",
+      "3A",
+      "B",
+      "101"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Bib"
+    ],
+    "data": [
+     [
+      "1",
+      "3",
+      "A",
+      "101"
+     ],
+     [
+      "3",
+      "1",
+      "A",
+      "102"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Bib"
+    ],
+    "data": [
+     [
+      "1",
+      "3",
+      "A",
+      "101"
+     ],
+     [
+      "1",
+      "3",
+      "A",
+      "102"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Bib"
+    ],
+    "data": [
+     [
+      "1",
+      "3",
+      "A",
+      "101"
+     ],
+     [
+      "1",
+      "4",
+      "A",
+      "101"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Target",
+     "Position",
+     "Bib"
+    ],
+    "data": [
+     [
+      "3",
+      "A",
+      "101"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Position",
+     "Bib"
+    ],
+    "data": [
+     [
+      "1",
+      "A",
+      "101"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Archer"
+    ],
+    "data": [
+     [
+      "1",
+      "1",
+      "A",
+      "Ann Same"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Ann",
+      "Same",
+      "recurve",
+      "QUB",
+      "open",
+      "advanced",
+      "1",
+      "both days",
+      ""
+     ],
+     [
+      "Ann",
+      "Same",
+      "recurve",
+      "UCD",
+      "open",
+      "advanced",
+      "2",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  },
+  {
+   "draw": {
+    "columns": [
+     "Session",
+     "Target",
+     "Position",
+     "Archer"
+    ],
+    "data": [
+     [
+      "",
+      "1",
+      "A",
+      "x"
+     ]
+    ]
+   },
+   "roster": {
+    "columns": [
+     "First Name",
+     "Last Name",
+     "Bow Type",
+     "College",
+     "Gender",
+     "Category",
+     "Membership Number",
+     "Which Days",
+     "Session Preference"
+    ],
+    "data": [
+     [
+      "Aoife",
+      "Ní Bhriain",
+      "Recurve",
+      "qub",
+      "Female",
+      "Advanced",
+      "101",
+      "both days",
+      ""
+     ],
+     [
+      "Seán",
+      "Ó Briain",
+      "barebow",
+      "UCD",
+      "open",
+      "beginner",
+      "102",
+      "Saturday",
+      ""
+     ],
+     [
+      "Liam",
+      "Byrne",
+      "compound",
+      "UCC",
+      "f",
+      "intermediate",
+      "103",
+      "yes",
+      "2"
+     ],
+     [
+      "Cara",
+      "Doyle",
+      "recurve",
+      "DCU",
+      "open",
+      "guest",
+      "104",
+      "0",
+      ""
+     ],
+     [
+      "Niamh",
+      "Walsh",
+      "recurve",
+      "UL",
+      "senior league",
+      "beginner",
+      "105",
+      "sunday only",
+      "1, 2"
+     ],
+     [
+      "Eoin",
+      "Mac Giolla",
+      "barebow",
+      "TUD",
+      "female",
+      "intermediate",
+      "106",
+      "both",
+      ""
+     ],
+     [
+      "Ola",
+      "Nowak",
+      "recurve",
+      "UG",
+      "open",
+      "mystery",
+      "107",
+      "both days",
+      ""
+     ]
+    ]
+   }
+  }
+ ],
+ "hth": [
+  [
+   {
+    "First Name": "Aoife",
+    "Last Name": "Ní Bhriain",
+    "Bow Type": "Recurve",
+    "College": "qub",
+    "Gender": "Female",
+    "Category": "Advanced",
+    "Membership Number": "101",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "Seán",
+    "Last Name": "Ó Briain",
+    "Bow Type": "barebow",
+    "College": "UCD",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "102",
+    "Which Days": "Saturday",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "Liam",
+    "Last Name": "Byrne",
+    "Bow Type": "compound",
+    "College": "UCC",
+    "Gender": "f",
+    "Category": "intermediate",
+    "Membership Number": "103",
+    "Which Days": "yes",
+    "Session Preference": "2"
+   },
+   {
+    "First Name": "Cara",
+    "Last Name": "Doyle",
+    "Bow Type": "recurve",
+    "College": "DCU",
+    "Gender": "open",
+    "Category": "guest",
+    "Membership Number": "104",
+    "Which Days": "0",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "Niamh",
+    "Last Name": "Walsh",
+    "Bow Type": "recurve",
+    "College": "UL",
+    "Gender": "senior league",
+    "Category": "beginner",
+    "Membership Number": "105",
+    "Which Days": "sunday only",
+    "Session Preference": "1, 2"
+   },
+   {
+    "First Name": "Eoin",
+    "Last Name": "Mac Giolla",
+    "Bow Type": "barebow",
+    "College": "TUD",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "106",
+    "Which Days": "both",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "Ola",
+    "Last Name": "Nowak",
+    "Bow Type": "recurve",
+    "College": "UG",
+    "Gender": "open",
+    "Category": "mystery",
+    "Membership Number": "107",
+    "Which Days": "both days",
+    "Session Preference": ""
+   }
+  ],
+  [
+   {
+    "First Name": "A0",
+    "Last Name": "X0",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "0-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A1",
+    "Last Name": "X0",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "1-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A1",
+    "Last Name": "X1",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "1-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A2",
+    "Last Name": "X0",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "2-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A2",
+    "Last Name": "X1",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "2-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A2",
+    "Last Name": "X2",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "2-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A3",
+    "Last Name": "X0",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "3-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A3",
+    "Last Name": "X1",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "3-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A3",
+    "Last Name": "X2",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "3-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A3",
+    "Last Name": "X3",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "3-3",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A4",
+    "Last Name": "X0",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "4-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A4",
+    "Last Name": "X1",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "4-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A4",
+    "Last Name": "X2",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "4-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A4",
+    "Last Name": "X3",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "4-3",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A4",
+    "Last Name": "X4",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "4-4",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A5",
+    "Last Name": "X0",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "advanced",
+    "Membership Number": "5-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A5",
+    "Last Name": "X1",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "advanced",
+    "Membership Number": "5-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A5",
+    "Last Name": "X2",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "advanced",
+    "Membership Number": "5-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A5",
+    "Last Name": "X3",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "advanced",
+    "Membership Number": "5-3",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A5",
+    "Last Name": "X4",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "advanced",
+    "Membership Number": "5-4",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A5",
+    "Last Name": "X5",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "advanced",
+    "Membership Number": "5-5",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A6",
+    "Last Name": "X0",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "6-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A6",
+    "Last Name": "X1",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "6-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A6",
+    "Last Name": "X2",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "6-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A6",
+    "Last Name": "X3",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "6-3",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A6",
+    "Last Name": "X4",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "6-4",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A6",
+    "Last Name": "X5",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "6-5",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A6",
+    "Last Name": "X6",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "beginner",
+    "Membership Number": "6-6",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A7",
+    "Last Name": "X0",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "7-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A7",
+    "Last Name": "X1",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "7-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A7",
+    "Last Name": "X2",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "7-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A7",
+    "Last Name": "X3",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "7-3",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A7",
+    "Last Name": "X4",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "7-4",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A7",
+    "Last Name": "X5",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "7-5",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A7",
+    "Last Name": "X6",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "7-6",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A7",
+    "Last Name": "X7",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "intermediate",
+    "Membership Number": "7-7",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X0",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X1",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X2",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X3",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-3",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X4",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-4",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X5",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-5",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X6",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-6",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X7",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-7",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A8",
+    "Last Name": "X8",
+    "Bow Type": "compound",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "advanced",
+    "Membership Number": "8-8",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X0",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X1",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X2",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X3",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-3",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X4",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-4",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X5",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-5",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X6",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-6",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X7",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-7",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X8",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-8",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X9",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-9",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X10",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-10",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X11",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-11",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X12",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-12",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X13",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-13",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X14",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-14",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A9",
+    "Last Name": "X15",
+    "Bow Type": "recurve",
+    "College": "QUB",
+    "Gender": "female",
+    "Category": "beginner",
+    "Membership Number": "9-15",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X0",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-0",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X1",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-1",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X2",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-2",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X3",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-3",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X4",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-4",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X5",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-5",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X6",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-6",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X7",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-7",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X8",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-8",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X9",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-9",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X10",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-10",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X11",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-11",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X12",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-12",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X13",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-13",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X14",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-14",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X15",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-15",
+    "Which Days": "both days",
+    "Session Preference": ""
+   },
+   {
+    "First Name": "A10",
+    "Last Name": "X16",
+    "Bow Type": "barebow",
+    "College": "QUB",
+    "Gender": "open",
+    "Category": "intermediate",
+    "Membership Number": "10-16",
+    "Which Days": "both days",
+    "Session Preference": ""
+   }
+  ]
+ ],
+ "ianseo": [
+  {
+   "roster": [
+    {
+     "First Name": "Aoife",
+     "Last Name": "Ní Bhriain",
+     "Bow Type": "Recurve",
+     "College": "qub",
+     "Gender": "Female",
+     "Category": "Advanced",
+     "Membership Number": "101",
+     "Which Days": "both days",
+     "Session Preference": ""
+    },
+    {
+     "First Name": "Seán",
+     "Last Name": "Ó Briain",
+     "Bow Type": "barebow",
+     "College": "UCD",
+     "Gender": "open",
+     "Category": "beginner",
+     "Membership Number": "102",
+     "Which Days": "Saturday",
+     "Session Preference": ""
+    },
+    {
+     "First Name": "Liam",
+     "Last Name": "Byrne",
+     "Bow Type": "compound",
+     "College": "UCC",
+     "Gender": "f",
+     "Category": "intermediate",
+     "Membership Number": "103",
+     "Which Days": "yes",
+     "Session Preference": "2"
+    },
+    {
+     "First Name": "Cara",
+     "Last Name": "Doyle",
+     "Bow Type": "recurve",
+     "College": "DCU",
+     "Gender": "open",
+     "Category": "guest",
+     "Membership Number": "104",
+     "Which Days": "0",
+     "Session Preference": ""
+    },
+    {
+     "First Name": "Niamh",
+     "Last Name": "Walsh",
+     "Bow Type": "recurve",
+     "College": "UL",
+     "Gender": "senior league",
+     "Category": "beginner",
+     "Membership Number": "105",
+     "Which Days": "sunday only",
+     "Session Preference": "1, 2"
+    },
+    {
+     "First Name": "Eoin",
+     "Last Name": "Mac Giolla",
+     "Bow Type": "barebow",
+     "College": "TUD",
+     "Gender": "female",
+     "Category": "intermediate",
+     "Membership Number": "106",
+     "Which Days": "both",
+     "Session Preference": ""
+    }
+   ],
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "config": {
+    "college_short_names": {
+     "QUB": "Queens",
+     "UCD": "UCD",
+     "UCC": "Cork",
+     "DCU": "DCU",
+     "UL": "Limerick",
+     "TUD": "TU Dublin"
+    }
+   }
+  },
+  {
+   "roster": [
+    {
+     "First Name": "Aoife",
+     "Last Name": "Ní Bhriain",
+     "Bow Type": "Recurve",
+     "College": "qub",
+     "Gender": "Female",
+     "Category": "Advanced",
+     "Membership Number": "101",
+     "Which Days": "both days",
+     "Session Preference": ""
+    },
+    {
+     "First Name": "Seán",
+     "Last Name": "Ó Briain",
+     "Bow Type": "barebow",
+     "College": "UCD",
+     "Gender": "open",
+     "Category": "beginner",
+     "Membership Number": "102",
+     "Which Days": "Saturday",
+     "Session Preference": ""
+    }
+   ],
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "config": {
+    "college_short_names": {
+     "QUB": "Queens"
+    }
+   }
+  },
+  {
+   "roster": [
+    {
+     "First Name": "Aoife",
+     "Last Name": "Ní Bhriain",
+     "Bow Type": "Recurve",
+     "College": "qub",
+     "Gender": "Female",
+     "Category": "Advanced",
+     "Membership Number": "101",
+     "Which Days": "both days",
+     "Session Preference": ""
+    },
+    {
+     "First Name": "Seán",
+     "Last Name": "Ó Briain",
+     "Bow Type": "barebow",
+     "College": "UCD",
+     "Gender": "open",
+     "Category": "beginner",
+     "Membership Number": "102",
+     "Which Days": "Saturday",
+     "Session Preference": ""
+    }
+   ],
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    }
+   ],
+   "config": {
+    "college_short_names": {
+     "QUB": "Queens",
+     "UCD": "UCD"
+    }
+   }
+  },
+  {
+   "roster": [
+    {
+     "First Name": "Ola",
+     "Last Name": "Nowak",
+     "Bow Type": "recurve",
+     "College": "UG",
+     "Gender": "open",
+     "Category": "mystery",
+     "Membership Number": "107",
+     "Which Days": "both days",
+     "Session Preference": ""
+    }
+   ],
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "config": {
+    "college_short_names": {
+     "UG": "Galway"
+    }
+   }
+  }
+ ],
+ "swapBlocks": [
+  {
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "spec": "1-2"
+  },
+  {
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "spec": "1.1-3"
+  },
+  {
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "spec": " 2 . 1 - 3 "
+  },
+  {
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "spec": "1-1"
+  },
+  {
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "spec": "4-5"
+  },
+  {
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "spec": "9.1-2"
+  },
+  {
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "spec": "x"
+  },
+  {
+   "draw": [
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Aoife Ní Bhriain",
+     "College": "QUB",
+     "Target Face": "3s",
+     "Membership Number": "101"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Seán Ó Briain",
+     "College": "UCD",
+     "Target Face": "40",
+     "Membership Number": "102"
+    },
+    {
+     "Session": 1,
+     "Target": 1,
+     "Position": "C",
+     "Archer": "Liam Byrne",
+     "College": "UCC",
+     "Target Face": "3s",
+     "Membership Number": "103"
+    },
+    {
+     "Session": 1,
+     "Target": 2,
+     "Position": "A",
+     "Archer": "Cara Doyle",
+     "College": "DCU",
+     "Target Face": "3s",
+     "Membership Number": "104"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "A",
+     "Archer": "Niamh Walsh",
+     "College": "UL",
+     "Target Face": "3s",
+     "Membership Number": "105"
+    },
+    {
+     "Session": 2,
+     "Target": 1,
+     "Position": "B",
+     "Archer": "Eoin Mac Giolla",
+     "College": "TUD",
+     "Target Face": "40",
+     "Membership Number": "106"
+    },
+    {
+     "Session": 2,
+     "Target": 3,
+     "Position": "D",
+     "Archer": "Ola Nowak",
+     "College": "UG",
+     "Target Face": "40",
+     "Membership Number": "107"
+    }
+   ],
+   "spec": "0-1"
+  }
+ ],
+ "incompatible": [
+  [
+   {
+    "Session": 1,
+    "Target": 1,
+    "Position": "A",
+    "Archer": "Aoife Ní Bhriain",
+    "College": "QUB",
+    "Target Face": "3s",
+    "Membership Number": "101"
+   },
+   {
+    "Session": 1,
+    "Target": 1,
+    "Position": "B",
+    "Archer": "Seán Ó Briain",
+    "College": "UCD",
+    "Target Face": "40",
+    "Membership Number": "102"
+   },
+   {
+    "Session": 1,
+    "Target": 1,
+    "Position": "C",
+    "Archer": "Liam Byrne",
+    "College": "UCC",
+    "Target Face": "3s",
+    "Membership Number": "103"
+   },
+   {
+    "Session": 1,
+    "Target": 2,
+    "Position": "A",
+    "Archer": "Cara Doyle",
+    "College": "DCU",
+    "Target Face": "3s",
+    "Membership Number": "104"
+   },
+   {
+    "Session": 2,
+    "Target": 1,
+    "Position": "A",
+    "Archer": "Niamh Walsh",
+    "College": "UL",
+    "Target Face": "3s",
+    "Membership Number": "105"
+   },
+   {
+    "Session": 2,
+    "Target": 1,
+    "Position": "B",
+    "Archer": "Eoin Mac Giolla",
+    "College": "TUD",
+    "Target Face": "40",
+    "Membership Number": "106"
+   },
+   {
+    "Session": 2,
+    "Target": 3,
+    "Position": "D",
+    "Archer": "Ola Nowak",
+    "College": "UG",
+    "Target Face": "40",
+    "Membership Number": "107"
+   }
+  ],
+  [
+   {
+    "Session": 1,
+    "Target": 1,
+    "Position": "A",
+    "Target Face": "3s"
+   },
+   {
+    "Session": 1,
+    "Target": 1,
+    "Position": "C",
+    "Target Face": "40"
+   },
+   {
+    "Session": 1,
+    "Target": 2,
+    "Position": "B",
+    "Target Face": "Vegas"
+   },
+   {
+    "Session": 1,
+    "Target": 2,
+    "Position": "D",
+    "Target Face": "40"
+   }
+  ]
+ ],
+ "classFields": [
+  {
+   "code": "rbf",
+   "current": {
+    "Gender": "female",
+    "Category": "guest"
+   }
+  },
+  {
+   "code": "CG",
+   "current": {
+    "Gender": "female",
+    "Category": "guest"
+   }
+  },
+  {
+   "code": "CO",
+   "current": {
+    "Gender": "female",
+    "Category": "guest"
+   }
+  },
+  {
+   "code": "CF",
+   "current": {
+    "Gender": "female",
+    "Category": "guest"
+   }
+  },
+  {
+   "code": "BS",
+   "current": {
+    "Gender": "female",
+    "Category": "guest"
+   }
+  },
+  {
+   "code": "RAO",
+   "current": {
+    "Gender": "female",
+    "Category": "guest"
+   }
+  },
+  {
+   "code": "XX",
+   "current": {
+    "Gender": "female",
+    "Category": "guest"
+   }
+  },
+  {
+   "code": "cs",
+   "current": {
+    "Gender": "female",
+    "Category": "guest"
+   }
+  }
+ ],
+ "summary": [
+  [
+   {
+    "Session": 1,
+    "Target": 1,
+    "Position": "A",
+    "Archer": "Aoife Ní Bhriain",
+    "College": "QUB",
+    "Target Face": "3s",
+    "Membership Number": "101"
+   },
+   {
+    "Session": 1,
+    "Target": 1,
+    "Position": "B",
+    "Archer": "Seán Ó Briain",
+    "College": "UCD",
+    "Target Face": "40",
+    "Membership Number": "102"
+   },
+   {
+    "Session": 1,
+    "Target": 1,
+    "Position": "C",
+    "Archer": "Liam Byrne",
+    "College": "UCC",
+    "Target Face": "3s",
+    "Membership Number": "103"
+   },
+   {
+    "Session": 1,
+    "Target": 2,
+    "Position": "A",
+    "Archer": "Cara Doyle",
+    "College": "DCU",
+    "Target Face": "3s",
+    "Membership Number": "104"
+   },
+   {
+    "Session": 2,
+    "Target": 1,
+    "Position": "A",
+    "Archer": "Niamh Walsh",
+    "College": "UL",
+    "Target Face": "3s",
+    "Membership Number": "105"
+   },
+   {
+    "Session": 2,
+    "Target": 1,
+    "Position": "B",
+    "Archer": "Eoin Mac Giolla",
+    "College": "TUD",
+    "Target Face": "40",
+    "Membership Number": "106"
+   },
+   {
+    "Session": 2,
+    "Target": 3,
+    "Position": "D",
+    "Archer": "Ola Nowak",
+    "College": "UG",
+    "Target Face": "40",
+    "Membership Number": "107"
+   }
+  ],
+  []
+ ]
+}

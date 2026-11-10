@@ -130,3 +130,57 @@ Edit `config.json` beside `app.py`:
 | `college_short_names` | College-code to IANSEO country-name mapping used in participant exports. |
 
 All five keys are required. The app reports a configuration error if the file or a key is missing or malformed.
+
+## Browser edition (Cloudflare Pages)
+
+The `browser/` directory contains a static edition of the same app that runs entirely in the visitor's browser, with no backend, database, or paid Cloudflare service. Roster data and the current draw stay in memory in that browser tab and are discarded when it is reloaded. It reads the same `config.json` as the Streamlit edition.
+
+It has the same features as the Streamlit edition:
+
+- Import rosters from CSV, TSV, TAB, TXT, XLSX or ODS (including IANSEO exports and headerless List Load files), or copy an existing schedule.
+- Generate schedules with the same rules and preferences: Campanile, Cluster by class or Standard grouping, Vegas faces, college default sessions, and keeping existing allocations when regenerating.
+- Edit the draw: edit an archer, duplicate an archer into another session, delete allocations or archers, batch session changes, session/target swaps, target face swaps, target block number swaps and class swaps.
+- Head-to-head analysis, the session summary and class counts.
+- Download the Excel workbook or the shooting list CSV, and copy or download the IANSEO participant import.
+
+The solver is HiGHS (a MIP solver compiled to WebAssembly) running in a Web Worker, in place of OR-Tools. It optimises the same weighted objective as `solve_schedule()` within `solver_time_limit_seconds`. A draw that fills every place while an odd number of archers shoot 3s faces is impossible (a full target holds 0, 2 or 4 such archers), so the page flags it and disables generation. The browser edition also adds targets to the untouched default setup when it is too small for the roster.
+
+Where the two editions intentionally differ:
+
+- A headerless IANSEO List Load CSV/TSV keeps its first archer (the Streamlit edition reads that row as a header and drops it).
+- A duplicated archer keeps the source archer's face, as in the Streamlit edition, but is also placed by that face (the Streamlit edition places it by the Guest face, which can leave an incompatible face pair).
+
+SheetJS, used for XLSX/ODS files, is vendored in `browser/vendor/` from the official SheetJS distribution; the npm registry's `xlsx` package is outdated.
+
+### Run locally
+
+```bash
+cd browser
+npm ci
+npm run dev
+```
+
+Run the browser scheduler tests and create the Pages production build with:
+
+```bash
+npm test
+npm run build
+```
+
+`tests/parity.test.js` compares the browser ports with outputs recorded from `app.py`. After changing `app.py`, regenerate them from the repository root and rerun the tests:
+
+```bash
+.venv/bin/python browser/tests/python_parity.py
+```
+
+### Deploy from GitHub
+
+The browser edition is on the `browser-scheduler-pages` branch. To have Cloudflare deploy it automatically when changes are merged into `main`:
+
+1. In Cloudflare, open **Workers & Pages** and create a **Pages** project connected to `Kya-ra/archery-scheduler` on GitHub.
+2. Set the production branch to `main` and the project root directory to `browser`.
+3. Set the build command to `npm run build` and the output directory to `dist`.
+4. Save and deploy. Each new commit on `main`, including a merged pull request, will trigger a new static deployment.
+5. In the Pages project's **Custom domains** settings, add `ianseo.kyara.ie`. Complete the DNS setup Cloudflare presents; if your DNS is hosted elsewhere, add the requested CNAME record after associating the domain with the Pages project.
+
+Cloudflare Pages is free for this static deployment. Do not use the original root-level Dockerfile or the Streamlit entry point as the Pages build; those are for the server-backed edition.
