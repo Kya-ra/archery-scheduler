@@ -1,6 +1,8 @@
 # Archery Scheduler
 
-A Streamlit app for importing archer rosters, generating target assignments, managing a draw, and exporting schedules for Excel and IANSEO.
+An app for importing archer rosters, generating target assignments, managing a draw, and exporting schedules for Excel and IANSEO.
+
+It comes in two editions: a static [browser edition](#browser-edition-cloudflare-pages) in `browser/`, deployed to Cloudflare Pages from `main`, and the original server-backed Streamlit edition (`app.py`). The `streamlit` branch preserves `main` as it was before the browser edition was merged.
 If you find this useful, why not make a small donation to a animal welfare charity, or another charity of your choice
 
 ## Run the app
@@ -178,12 +180,14 @@ npm run build
 
 ### Deploy from GitHub
 
-The browser edition is on the `browser-scheduler-pages` branch. To have Cloudflare deploy it automatically when changes are merged into `main`:
+To have Cloudflare deploy the browser edition automatically when changes are merged into `main`:
 
 1. In Cloudflare, open **Workers & Pages** and create a **Pages** project connected to `Kya-ra/archery-scheduler` on GitHub.
 2. Set the production branch to `main` and the project root directory to `browser`.
-3. Set the build command to `npm run build` and the output directory to `dist`.
+3. Choose the **Vite** framework preset or set the build command to `npm run build`, and set the output directory to `dist`. The build uses Node 22, pinned by `browser/.node-version`.
 4. Save and deploy. Each new commit on `main`, including a merged pull request, will trigger a new static deployment.
 5. In the Pages project's **Custom domains** settings, add `ianseo.kyara.ie`. Complete the DNS setup Cloudflare presents; if your DNS is hosted elsewhere, add the requested CNAME record after associating the domain with the Pages project.
+
+Response headers, including long-lived caching for the fingerprinted files in `/assets`, are set in `browser/public/_headers`.
 
 Cloudflare Pages is free for this static deployment. Do not use the original root-level Dockerfile or the Streamlit entry point as the Pages build; those are for the server-backed edition.
