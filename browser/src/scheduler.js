@@ -5,8 +5,9 @@ import {
   sortDraw,
 } from "./roster.js";
 
-// Cluster-by-class target order used by app.py.
-const CLASS_ORDER = ["C", "BB", "BI", "BA", "RB", "RI", "RA"];
+// Cluster-by-class buckets, in target order, as in app.py: compound and
+// non-beginner recurve, then recurve beginners and barebow, then "Other".
+const CLASS_ORDER = ["C/R", "RB/B"];
 
 const clean = (value) => String(value ?? "").trim();
 
@@ -49,8 +50,9 @@ function addTerm(model, variable, constraint, coefficient) {
 
 function bucketFor(code) {
   const normalized = String(code ?? "").trim().toUpperCase();
-  if (!normalized) return "Other";
-  return normalized.startsWith("C") ? "C" : normalized.slice(0, 2);
+  if (normalized.startsWith("RB") || normalized.startsWith("B")) return "RB/B";
+  if (normalized.startsWith("C") || normalized.startsWith("R")) return "C/R";
+  return "Other";
 }
 
 function positionFor(detail) {
@@ -202,7 +204,7 @@ export function createTargetScheduleModel({
   if (!vegasMode && totalCapacity === archerCount && threeS % 2 === 1) {
     throw new Error(fullCapacityParityMessage(archerCount, threeS));
   }
-  if (!archers.some(isSpecial)) {
+  if (campanile && !archers.some(isSpecial)) {
     throw new Error("No qualifying archers exist for the special target-block rule.");
   }
 
@@ -278,7 +280,9 @@ export function createTargetScheduleModel({
         .map(({ variable }) => [variable, 1]);
 
       addRow(`capacity_${key}`, { max: capacity }, memberTerms(() => true));
-      addRow(`qualifying_${key}`, { min: 1 }, memberTerms(isSpecial));
+      // Only Campanile requires a qualifying archer; Standard and
+      // cluster-by-class allow all-beginner targets.
+      if (campanile) addRow(`qualifying_${key}`, { min: 1 }, memberTerms(isSpecial));
       if (campanile) {
         addRow(`campanile_${key}`, { min: 1 }, memberTerms((row) => row.Category !== "beginner"));
       }
@@ -346,7 +350,7 @@ export function createTargetScheduleModel({
           for (const [threshold, weight] of CLUSTER_THRESHOLDS) {
             if (threshold > capacity || bucketTerms.length < threshold) continue;
             // Indicator can be 1 only when the bucket has `threshold` archers here.
-            const indicator = `cluster_${key}_${bucket}_${threshold}`;
+            const indicator = `cluster_${key}_${bucket.replace(/\W/g, "")}_${threshold}`;
             addVariable(model, indicator, weight * CLUSTER_THRESHOLD_SCALE);
             clusterVariables.push(indicator);
             addRow(`${indicator}_min`, { min: 0 }, [...bucketTerms, [indicator, -threshold]]);

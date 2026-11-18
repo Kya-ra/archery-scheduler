@@ -138,26 +138,40 @@ test("clustering never outweighs the same-college triplet penalty", async () => 
   }
 });
 
-test("clusters gender-neutral classes in the configured order", async () => {
+test("clusters classes into the two configured buckets in order", async () => {
   const archers = [
+    archer("RB1", { category: "beginner", college: "QUB" }),
+    archer("RB2", { category: "beginner", college: "UCC" }),
+    archer("BB1", { bow: "barebow", category: "beginner", college: "QUB" }),
+    archer("BB2", { bow: "barebow", category: "beginner", college: "UCC" }),
     archer("RA1", { category: "advanced", college: "QUB" }),
     archer("RA2", { category: "advanced", college: "UCC" }),
-    archer("RA3", { category: "advanced", gender: "female", college: "QUB" }),
-    archer("RA4", { category: "advanced", gender: "female", college: "UCC" }),
     archer("RI1", { category: "intermediate", college: "QUB" }),
     archer("RI2", { category: "intermediate", college: "UCC" }),
-    archer("RI3", { category: "intermediate", gender: "female", college: "QUB" }),
-    archer("RI4", { category: "intermediate", gender: "female", college: "UCC" }),
   ];
   const draw = await solve(archers, { targets: [2], mode: "Cluster by class" });
-  const bucketByTarget = new Map();
+  const codesByTarget = new Map();
   for (const row of draw) {
-    if (!bucketByTarget.has(row.Target)) bucketByTarget.set(row.Target, new Set());
-    bucketByTarget.get(row.Target).add(row["Category Code"].slice(0, 2));
+    if (!codesByTarget.has(row.Target)) codesByTarget.set(row.Target, new Set());
+    codesByTarget.get(row.Target).add(row["Category Code"].slice(0, 2));
   }
-  // Order is C, BB, BI, BA, RB, RI, RA: intermediate before advanced.
-  assert.deepEqual([...bucketByTarget.get(1)], ["RI"]);
-  assert.deepEqual([...bucketByTarget.get(2)], ["RA"]);
+  // C + R (not RB) take the front targets; RB + B follow, even all-beginner.
+  assert.deepEqual([...codesByTarget.get(1)].sort(), ["RA", "RI"]);
+  assert.deepEqual([...codesByTarget.get(2)].sort(), ["BB", "RB"]);
+});
+
+test("only Campanile mode rejects an all-beginner target", async () => {
+  const archers = [
+    archer("RB1", { category: "beginner", college: "QUB" }),
+    archer("RB2", { category: "beginner", college: "UCC" }),
+    archer("RB3", { category: "beginner", college: "QUB" }),
+    archer("RB4", { category: "beginner", college: "UCC" }),
+  ];
+  for (const mode of ["Standard", "Cluster by class"]) {
+    const draw = await solve(archers, { mode });
+    assert.equal(draw.length, 4, mode);
+  }
+  await assert.rejects(solve(archers, { mode: "Campanile" }));
 });
 
 test("allows four Vegas archers on one target", async () => {

@@ -1110,15 +1110,18 @@ def solve_schedule(
     cluster_order_score = []
     cluster_order_score_bound = 0
     if clustering_mode:
-        cluster_order = ["C", "BB", "BI", "BA", "RB", "RI", "RA"]
+        # Cluster buckets, placed on targets in this order:
+        # compound and non-beginner recurve, then recurve beginners and
+        # barebow, then anything else.
+        cluster_order = ["C/R", "RB/B"]
 
         def cluster_class(code):
             normalized = str(code).strip().upper()
-            if not normalized:
-                return "Other"
-            if normalized.startswith("C"):
-                return "C"
-            return normalized[:2]
+            if normalized.startswith("RB") or normalized.startswith("B"):
+                return "RB/B"
+            if normalized.startswith(("C", "R")):
+                return "C/R"
+            return "Other"
 
         class_buckets = {cluster_class(code) for code in df["_code"]}
         class_buckets = sorted(
@@ -1240,8 +1243,9 @@ def solve_schedule(
                 # Every target must have at least one non-beginner archer.
                 model.Add(sum(non_beginners) >= 1)
 
-    # Every target block must contain a qualifying archer.
-    for s in range(ns):
+    # In Campanile mode every target block must contain a qualifying
+    # archer. Standard and cluster-by-class allow all-beginner targets.
+    for s in range(ns if campanile_mode else 0):
         letters = (
             ["A", "B"] if details[s] == "Single"
             else ["A", "B", "C", "D"]
